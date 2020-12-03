@@ -5,6 +5,10 @@ const BookController = require('../controllers/book.controller');
 
 /* GET home page. */
 router.get('/', BookController.getAllBook);
+// router.get('/', (req, res, next) => {
+//     res.render('./book/bookList')
+// });
+
 router.post('/add',BookController.createANewBook);
 router.get('/add', BookController.getCreateBookForm);
 router.get('/update', BookController.getUpdateForm);

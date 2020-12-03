@@ -13,7 +13,7 @@ module.exports = {
     },
     getAllBook: async (req, res, next)=>{
         const bookList = await Book.getAllBook();
-        res.send(bookList);
+        res.render('./book/bookList', {bookList});
     },
     getCreateBookForm: async(req, res, next)=>{
         res.render("book/createBook");
