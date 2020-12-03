@@ -1,42 +1,42 @@
 const Book = require('../models/book.model');
 
 module.exports = {
-    createANewBook:async (req, res, next)=>{
+    createANewBook: async (req, res, next) => {
         const aNewBookInfo = req.body;
         console.log("a New Book Info: ", aNewBookInfo);
-        const newBookRes =await Book.createANewBook(aNewBookInfo);
+        const newBookRes = await Book.createANewBook(aNewBookInfo);
         console.log("a Book Res: ", newBookRes);
-        if(newBookRes == -1){
+        if (newBookRes == -1) {
             res.send("Create Failed");
         }
-        res.send(newBookRes); 
+        res.send(newBookRes);
     },
 
-    getAllBook: async (req, res, next)=>{
+    getAllBook: async (req, res, next) => {
         const bookList = await Book.getAllBook();
-        res.render('./book/bookList', {bookList});
+        res.render('./book/bookList', { bookList });
     },
 
-    getCreateBookForm: async(req, res, next)=>{
+    getCreateBookForm: async (req, res, next) => {
         res.render("book/createBook");
     },
 
-    updateANewBook:async (req, res, next)=>{
+    updateANewBook: async (req, res, next) => {
         const aNewBookInfo = req.body;
         console.log("a New Book Info: ", aNewBookInfo);
-        const newBookRes =await Book.updateABook(aNewBookInfo);
+        const newBookRes = await Book.updateABook(aNewBookInfo);
         console.log("a Book Res: ", newBookRes);
-        if(newBookRes == -1){
+        if (newBookRes == -1) {
             res.send("update Failed");
         }
-        res.send(newBookRes); 
+        res.send(newBookRes);
     },
 
-    getUpdateForm: async(req, res, next)=>{
+    getUpdateForm: async (req, res, next) => {
         res.send("not now");
     },
-    
-    deleteABook: async (req, res, next)=>{
+
+    deleteABook: async (req, res, next) => {
         const _id = req.body._id;
 
         //id mean real id (_id)

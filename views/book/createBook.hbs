@@ -7,42 +7,43 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="name">Ten sach:</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id">ID:</label>
-                        <input type="text" class="form-control" id="id">
+                        <input type="text" class="form-control" id="id" name="id">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="author">Tac gia:</label>
-                        <input type="text" class="form-control" id="author">
+                        <input type="text" class="form-control" id="author" name="author">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="category">The loai:</label>
-                        <input type="text" class="form-control" id="category">
+                        <input type="text" class="form-control" id="category" name="category">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="quantity">So luong:</label>
-                        <input type="number" class="form-control" id="quantity">
+                        <input type="number" class="form-control" id="quantity" name="quantity">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="price">Don gia:</label>
-                        <input type="number" class="form-control" id="price">
+                        <input type="number" class="form-control" id="price" name="price">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="image">Link anh</label>
-                    <input type="url" class="form-control" id="image">
+                    <input type="url" class="form-control" id="image" name="image">
                 </div>
                 <div class="form-group">
                     <label for="description">Mieu ta</label>
-                    <textarea class="form-control" id="description">  </textarea>
+                    <input type="text" class="form-control" id="description" name="description"></input>
                 </div>
-                <button type="submit" class="btn btn-primary">Them</button>
+                <button type="submit" class="btn btn-primary">Add</button></a>
+            
             </form>
         </div>
     </div>
@@ -56,7 +57,9 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
+
+
+{{!-- <script>
     $(document).ready(function () {
         let imagesPreview = function (input, placeToInsertImagePreview) {
             if (input.files) {
@@ -76,4 +79,4 @@
             imagesPreview(this, "div.preview-images");
         });
     });
-</script>
+</script> --}}

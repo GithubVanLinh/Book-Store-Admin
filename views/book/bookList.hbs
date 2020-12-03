@@ -26,6 +26,9 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                <a href="/book/add" style="float: right;">
+                  <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
+                </a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -39,6 +42,7 @@
                       <th>Author</th>
                       <th>Image</th>
                       <th>Date</th>
+                      <th>Option</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -56,6 +60,11 @@
                       <td>{{this.author.name}}</td>
                       <td>{{this.image}}</td>
                       <td>{{this.date}}</td>
+                      <td style="text-align: center;">
+                        <a href="#">
+                          <i class="far fa-edit"></i>
+                        </a>
+                      </td>
                     </tr>
                     {{/each}}
                   </tbody>
@@ -104,6 +113,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
 <!-- page script -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
 <script>
   $(function () {
     $("#example1").DataTable({
