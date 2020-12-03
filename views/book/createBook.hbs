@@ -1,9 +1,8 @@
-<div class="container content-wrapper">
-    <div class="row">
-        <div class="col-sm-8 mt-3">
-            <h4>Add book</h4>
+<div class="container content-wrapper" style="padding: 20px;">
+    {{!-- <div class="row">
+        <div class="col-sm-8 mt-3"> --}}
 
-            <form action="/book/add" method="POST">
+    {{!-- <form action="/book/add" method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="name">Ten sach:</label>
@@ -43,9 +42,64 @@
                     <textarea class="form-control" id="description">  </textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Them</button>
-            </form>
+            </form> --}}
+
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Add book</h3>
         </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form role="form" action="/book/add" method="POST">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="name">Ten sach:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id">ID:</label>
+                        <input type="text" class="form-control" id="id">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="author">Tac gia:</label>
+                        <input type="text" class="form-control" id="author">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="category">The loai:</label>
+                        <input type="text" class="form-control" id="category">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="quantity">So luong:</label>
+                        <input type="number" class="form-control" id="quantity">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="price">Don gia:</label>
+                        <input type="number" class="form-control" id="price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Link anh</label>
+                    <input type="url" class="form-control" id="image">
+                </div>
+                <div class="form-group">
+                    <label for="description">Mieu ta</label>
+                    <textarea class="form-control" id="description">  </textarea>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Them</button>
+                </div>
+        </form>
     </div>
+    <!-- /.card -->
+    {{!-- </div> --}}
+    {{!-- </div> --}}
     <hr />
     <div class="row">
         <div class="col-sm-12">
