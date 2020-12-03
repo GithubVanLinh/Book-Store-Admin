@@ -11,13 +11,16 @@ module.exports = {
         }
         res.send(newBookRes); 
     },
+
     getAllBook: async (req, res, next)=>{
         const bookList = await Book.getAllBook();
         res.render('./book/bookList', {bookList});
     },
+
     getCreateBookForm: async(req, res, next)=>{
         res.render("book/createBook");
     },
+
     updateANewBook:async (req, res, next)=>{
         const aNewBookInfo = req.body;
         console.log("a New Book Info: ", aNewBookInfo);
@@ -28,9 +31,11 @@ module.exports = {
         }
         res.send(newBookRes); 
     },
+
     getUpdateForm: async(req, res, next)=>{
         res.send("not now");
     },
+    
     deleteABook: async (req, res, next)=>{
         const _id = req.body._id;
 
