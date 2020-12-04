@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container content-wrapper" style="padding: 20px;">
     {{!-- <div class="row">
         <div class="col-sm-8 mt-3"> --}}
@@ -11,20 +12,61 @@
                     <div class="form-group col-md-4">
                         <label for="id">ID:</label>
                         <input type="text" class="form-control" id="id">
+=======
+<div class="content-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 mt-3">
+            <h4>Add book</h4>
+
+            <form action="/book/add" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="id">ID:</label>
+                        <input type="text" class="form-control" id="id" name="id">
+>>>>>>> khoapt
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
+<<<<<<< HEAD
                         <label for="author">Tac gia:</label>
                         <input type="text" class="form-control" id="author">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="category">The loai:</label>
                         <input type="text" class="form-control" id="category">
+=======
+                        <div class="form-group">
+                            <label for="author">Author:</label>
+                            <select class="form-control" name="author" id="author">
+                                <option value="" disabled selected>Choose author</option>
+                                {{#each authors}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{!-- <label for="category">Category:</label>
+                        <input type="text" class="form-control" id="category" name="category"> --}}
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select class="form-control" name="category" id="category" multiple>
+                                {{#each categories}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+>>>>>>> khoapt
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
+<<<<<<< HEAD
                         <label for="quantity">So luong:</label>
                         <input type="number" class="form-control" id="quantity">
                     </div>
@@ -47,6 +89,27 @@
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Add book</h3>
+=======
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="price">Price:</label>
+                        <input type="number" class="form-control" id="price" name="price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image url:</label>
+                    <input type="url" class="form-control" id="image" name="image">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="description"></input>
+                </div>
+                <button type="submit" class="btn btn-primary">Add to Database</button></a>
+
+            </form>
+>>>>>>> khoapt
         </div>
         <!-- /.card-header -->
         <!-- form start -->
@@ -110,24 +173,3 @@
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        let imagesPreview = function (input, placeToInsertImagePreview) {
-            if (input.files) {
-                let filesAmount = input.files.length;
-                for (i = 0; i < filesAmount; i++) {
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-                        $($.parseHTML("<img>"))
-                            .attr("src", event.target.result)
-                            .appendTo(placeToInsertImagePreview);
-                    };
-                    reader.readAsDataURL(input.files[i]);
-                }
-            }
-        };
-        $("#input-files").on("change", function () {
-            imagesPreview(this, "div.preview-images");
-        });
-    });
-</script>

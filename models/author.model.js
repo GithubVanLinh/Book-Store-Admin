@@ -1,12 +1,12 @@
 const Author = require('../databases/author');
 
 module.exports = {
-    addNewAuthor: async (authorData)=>{
+    addNewAuthor: async (authorData) => {
         const authorRes = await Author.create(authorData);
         return authorRes;
     },
-    getAllAuthor: async ()=>{
-        const authors =await Author.find({}).exec();
+    getAllAuthor: async () => {
+        const authors = await Author.find({}).exec();
         console.log("author list: ", authors);
         return authors;
     }
