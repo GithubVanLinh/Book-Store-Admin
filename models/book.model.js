@@ -20,7 +20,7 @@ async function find_idByid(bookId) {
 //return id if exists
 async function validateAuthor(authorId) {
   const id = mongoose.Types.ObjectId(authorId);
-  const isExists = await Author.exists({ _id: id, show: true});
+  const isExists = await Author.exists({ _id: id, show: true });
   if (isExists) {
     console.log("author is valided");
     return id;
@@ -31,7 +31,7 @@ async function validateAuthor(authorId) {
 
 async function validateCategory(categoryId) {
   const id = mongoose.Types.ObjectId(categoryId);
-  const isExists = await Category.exists({ _id: id , show: true});
+  const isExists = await Category.exists({ _id: id, show: true });
   if (isExists) {
     return id;
   } else {
@@ -57,14 +57,20 @@ async function validateBookInfo(bookInfo) {
   //begin add category to newBook
   //check category exists
   //return categoryId if valid
-  const categoryArray = bookInfo.category;
-  const category = [];
 
-  for (i of categoryArray) {
-    const categoryId = await validateCategory(i);
-    if (categoryId === -1) {
-      return -1;
+  const category = [];
+  if (typeof(bookInfo.category) === typeof([])) {
+    const categoryArray = bookInfo.category;
+
+    for (i of categoryArray) {
+      const categoryId = await validateCategory(i);
+      if (categoryId === -1) {
+        return -1;
+      }
+      category.push(categoryId);
     }
+  }else{
+    const categoryId = await validateCategory(bookInfo.category);
     category.push(categoryId);
   }
   newBook.category = category;
@@ -78,12 +84,12 @@ async function validateBookInfo(bookInfo) {
 module.exports = {
   getBookById: async (id) => {
     const _id = mongoose.Types.ObjectId(id);
-    const book = await Book.findOne({ _id: _id , show: true});
+    const book = await Book.findOne({ _id: _id, show: true });
     return book;
   },
 
   getAllBook: async () => {
-    const books = await Book.find({show: true})
+    const books = await Book.find({ show: true })
       .populate("author")
       .populate("category")
       .exec();
@@ -144,11 +150,11 @@ module.exports = {
 
   deleteABook: async (id) => {
     try {
-      const res = await Book.findByIdAndUpdate(id,{show: false});
+      const res = await Book.findByIdAndUpdate(id, { show: false });
       return res;
     } catch (error) {
       console.log("wrong");
       return -1;
     }
-  }
+  },
 };
