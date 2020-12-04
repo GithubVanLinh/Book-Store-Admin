@@ -8,7 +8,11 @@ module.exports = {
         res.redirect("/category");
     },
     getAllCategory: async (req, res, next)=>{
-        const categoryList =await Category.getCategoryList();
-        res.send(categoryList);
+        const categoryList = await Category.getCategoryList();
+        res.render("./category/categorylist",{categoryList});
+        // res.send(categoryList);
+    },
+    getAddCategoryForm: async (req,res,next)=>{
+        res.render("./category/addCategory")
     }
 }

@@ -57,7 +57,7 @@ async function validateBookInfo(bookInfo) {
   //begin add category to newBook
   //check category exists
   //return categoryId if valid
-  const categoryArray = bookInfo.category.split(", ");
+  const categoryArray = bookInfo.category;
   const category = [];
 
   for (i of categoryArray) {
