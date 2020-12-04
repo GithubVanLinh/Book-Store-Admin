@@ -7,7 +7,4 @@ router.get("/", AuthorController.getAllAuthor);
 router.get("/add", AuthorController.renderCreateAuthorForm)
 router.post("/add", AuthorController.postNewAuthor)
 
-
-
-
 module.exports = router;
