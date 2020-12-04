@@ -22,7 +22,7 @@ module.exports = {
     getCreateBookForm: async (req, res, next) => {
         const authors = await Author.getAllAuthor();
         const categories = await Category.getCategoryList();
-        res.render("book/createBook", {authors, categories});
+        res.render("book/createBook", { authors, categories });
     },
 
     updateANewBook: async (req, res, next) => {
@@ -34,6 +34,7 @@ module.exports = {
             res.send("update Failed");
         }
         res.send(newBookRes);
+        // res.send(req.body);
     },
 
     getUpdateForm: async (req, res, next) => {
@@ -43,7 +44,7 @@ module.exports = {
         const categories = await Category.getCategoryList();
         // res.send(book.toString());
 
-        res.render('./book/update-book', {book, authors, categories})
+        res.render('./book/update-book', { book, authors, categories })
         // res.send(authors)
     },
 
