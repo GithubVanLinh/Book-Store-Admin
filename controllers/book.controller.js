@@ -33,7 +33,12 @@ module.exports = {
     },
 
     getUpdateForm: async (req, res, next) => {
-        res.send("not now");
+        const bookId = req.query.id;
+        const book = await Book.getBookById(bookId);
+
+        // res.send(book.toString());
+
+        res.render('./book/update-book', {book})
     },
 
     deleteABook: async (req, res, next) => {

@@ -40,7 +40,7 @@ const BookSchema = new Schema({
     default: 0
   },
   publisher: String,
-  desciption: String,
+  description: String,
   comments: [{
     type: mongoose.Types.ObjectId,
     ref: Comment

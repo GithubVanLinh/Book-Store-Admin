@@ -13,7 +13,7 @@ async function CheckBookExists(bookId) {
 
 async function find_idByid(bookId) {
   console.log("book Id: ", bookId);
-  const book = await Book.find({id: id});
+  const book = await Book.find({ id: id });
   return book._id;
 }
 
@@ -76,6 +76,12 @@ async function validateBookInfo(bookInfo) {
 }
 
 module.exports = {
+  getBookById: async (id) => {
+    const _id = mongoose.Types.ObjectId(id);
+    const book = await Book.findOne({ _id: _id });
+    return book;
+  },
+
   getAllBook: async () => {
     const books = await Book.find({})
       .populate("author")
@@ -122,7 +128,7 @@ module.exports = {
       console.log("book is valid");
 
       console.log("book is updating");
-      if(!aBook._id){
+      if (!aBook._id) {
         console.log("_id is required");
       }
       const bookDataRes = await Book.findByIdAndUpdate(aBook._id, aBook);
@@ -136,7 +142,7 @@ module.exports = {
     }
   },
 
-  deleteABook: async (id)=>{
+  deleteABook: async (id) => {
     try {
       const res = await Book.findByIdAndDelete(id);
       return res;

@@ -1,106 +1,104 @@
-<div class="wrapper">
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Books</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
-            </ol>
-          </div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Books</h1>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                <a href="/book/add" style="float: right;">
-                  <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
-                </a>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Category</th>
-                      <th>Author</th>
-                      <th>Image</th>
-                      <th>Date</th>
-                      <th>Option</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#each bookList}}
-                    <tr>
-                      <td>{{this.name}}</td>
-                      <td>{{this.quantity}}</td>
-                      <td>{{this.price}}</td>
-                      <td>
-                        {{#each this.category}}
-                        {{this.name}} <span>, </span>
-                        {{/each}}
-                      </td>
-                      {{!-- <td>{{this.category}}</td> --}}
-                      <td>{{this.author.name}}</td>
-                      <td>{{this.image}}</td>
-                      <td>{{this.date}}</td>
-                      <td style="text-align: center;">
-                        <a href="#">
-                          <i class="far fa-edit"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    {{/each}}
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">DataTables</li>
+          </ol>
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">DataTable with minimal features & hover style</h3>
+              <a class=".card-link" href="/book/add" style="float: right;">
+                <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
+              </a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <table id="example2" class="table table-bordered table-hover w.auto">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Image</th>
+                    <th>Date</th>
+                    <th>Option</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {{#each bookList}}
+                  <tr>
+                    <td>{{this.name}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>{{this.price}}</td>
+                    <td>
+                      {{#each this.category}}
+                      {{this.name}} <span>, </span>
+                      {{/each}}
+                    </td>
+                    <td>{{this.author.name}}</td>
+                    <td>{{this.image}}</td>
+                    <td>{{this.date}}</td>
+                    <td style="text-align: center;">
+                      <a href="/book/update?id={{this._id}}">
+                        <i class="far fa-edit"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{{!-- <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.0.5
     </div>
     <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
     reserved.
-  </footer>
+  </footer> --}}
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
+<!-- Control Sidebar -->
+{{!-- <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
+  </aside> --}}
+<!-- /.control-sidebar -->
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="/plugins/jquery/jquery.min.js"></script>
+{{!-- <script src="/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables -->
@@ -111,7 +109,7 @@
 <!-- AdminLTE App -->
 <script src="/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="/dist/js/demo.js"></script>
+<script src="/dist/js/demo.js"></script> --}}
 <!-- page script -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -128,11 +126,8 @@
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
     });
   });
 </script>
-</body>
-
-</html>
