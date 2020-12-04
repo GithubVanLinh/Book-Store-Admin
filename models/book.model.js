@@ -78,7 +78,10 @@ async function validateBookInfo(bookInfo) {
 module.exports = {
   getBookById: async (id) => {
     const _id = mongoose.Types.ObjectId(id);
-    const book = await Book.findOne({ _id: _id });
+    const book = await Book.findOne({ _id: _id })
+      .populate("author")
+      .populate("category")
+      .exec();
     return book;
   },
 

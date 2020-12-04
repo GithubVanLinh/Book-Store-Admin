@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+  <div class="row justify-content-center">
+    <div class="col-sm-8 mt-3">
+      <h4>New author</h4>
+
+      <form action="/author/add" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="description"></input>
+          </div>
+        </div>
+        <button type="submit" class="btn" style="color: white;background-color: #2980b9">Add to Database</button></a>
+
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="preview-images"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+{{!-- <script>
+  $(document).ready(function () {
+    let imagesPreview = function (input, placeToInsertImagePreview) {
+      if (input.files) {
+        let filesAmount = input.files.length;
+        for (i = 0; i < filesAmount; i++) {
+          let reader = new FileReader();
+          reader.onload = function (event) {
+            $($.parseHTML("<img>"))
+              .attr("src", event.target.result)
+              .appendTo(placeToInsertImagePreview);
+          };
+          reader.readAsDataURL(input.files[i]);
+        }
+      }
+    };
+    $("#input-files").on("change", function () {
+      imagesPreview(this, "div.preview-images");
+    });
+  });
+</script> --}}

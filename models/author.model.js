@@ -7,7 +7,7 @@ module.exports = {
     },
     getAllAuthor: async () => {
         const authors = await Author.find({}).exec();
-        console.log("author list: ", authors);
+        // console.log("author list: ", authors);
         return authors;
     }
 }
