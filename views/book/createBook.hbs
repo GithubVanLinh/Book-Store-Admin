@@ -16,12 +16,27 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="author">Author:</label>
-                        <input type="text" class="form-control" id="author" name="author">
+                        <div class="form-group">
+                            <label for="author">Author:</label>
+                            <select class="form-control" name="author" id="author">
+                                <option value="" disabled selected>Choose author</option>
+                                {{#each authors}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="category">Category:</label>
-                        <input type="text" class="form-control" id="category" name="category">
+                        {{!-- <label for="category">Category:</label>
+                        <input type="text" class="form-control" id="category" name="category"> --}}
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select class="form-control" name="category" id="category" multiple>
+                                {{#each categories}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">

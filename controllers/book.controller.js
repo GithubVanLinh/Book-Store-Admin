@@ -1,4 +1,6 @@
 const Book = require('../models/book.model');
+const Author = require('../models/author.model');
+const Category = require('../models/category.model');
 
 module.exports = {
     createANewBook: async (req, res, next) => {
@@ -18,7 +20,9 @@ module.exports = {
     },
 
     getCreateBookForm: async (req, res, next) => {
-        res.render("book/createBook");
+        const authors = await Author.getAllAuthor();
+        const categories = await Category.getCategoryList();
+        res.render("book/createBook", {authors, categories});
     },
 
     updateANewBook: async (req, res, next) => {
@@ -35,10 +39,12 @@ module.exports = {
     getUpdateForm: async (req, res, next) => {
         const bookId = req.query.id;
         const book = await Book.getBookById(bookId);
-
+        const authors = await Author.getAllAuthor();
+        const categories = await Category.getCategoryList();
         // res.send(book.toString());
 
-        res.render('./book/update-book', {book})
+        res.render('./book/update-book', {book, authors, categories})
+        // res.send(authors)
     },
 
     deleteABook: async (req, res, next) => {
