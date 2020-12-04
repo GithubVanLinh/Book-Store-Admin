@@ -52,10 +52,11 @@ const BookSchema = new Schema({
   image: {
     type: String,
     required: true
+  },
+  show: {
+    type: Boolean,
+    default: true
   }
 });
-
-
-
 
 module.exports = mongoose.model("Book", BookSchema);

@@ -7,20 +7,20 @@ const { options } = require("../routes/book");
 //True if exists
 async function CheckBookExists(bookId) {
   console.log("book Id: ", bookId);
-  const isBookExists = await Book.exists({ id: bookId });
+  const isBookExists = await Book.exists({ id: bookId, show: true });
   return isBookExists;
 }
 
 async function find_idByid(bookId) {
   console.log("book Id: ", bookId);
-  const book = await Book.find({ id: id });
+  const book = await Book.find({ id: id, show: true });
   return book._id;
 }
 
 //return id if exists
 async function validateAuthor(authorId) {
   const id = mongoose.Types.ObjectId(authorId);
-  const isExists = await Author.exists({ _id: id });
+  const isExists = await Author.exists({ _id: id, show: true});
   if (isExists) {
     console.log("author is valided");
     return id;
@@ -31,7 +31,7 @@ async function validateAuthor(authorId) {
 
 async function validateCategory(categoryId) {
   const id = mongoose.Types.ObjectId(categoryId);
-  const isExists = await Category.exists({ _id: id });
+  const isExists = await Category.exists({ _id: id , show: true});
   if (isExists) {
     return id;
   } else {
@@ -78,12 +78,12 @@ async function validateBookInfo(bookInfo) {
 module.exports = {
   getBookById: async (id) => {
     const _id = mongoose.Types.ObjectId(id);
-    const book = await Book.findOne({ _id: _id });
+    const book = await Book.findOne({ _id: _id , show: true});
     return book;
   },
 
   getAllBook: async () => {
-    const books = await Book.find({})
+    const books = await Book.find({show: true})
       .populate("author")
       .populate("category")
       .exec();
@@ -144,7 +144,7 @@ module.exports = {
 
   deleteABook: async (id) => {
     try {
-      const res = await Book.findByIdAndDelete(id);
+      const res = await Book.findByIdAndUpdate(id,{show: false});
       return res;
     } catch (error) {
       console.log("wrong");

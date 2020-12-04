@@ -31,9 +31,11 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="example2" class="table table-bordered table-hover w.auto">
+              {{!-- <table id="example2" class="table table-bordered table-hover"> --}}
+              <table id="example1" class="table table-bordered table-hover dataTable dtr-inline collapsed" role="grid"
+                aria-describedby="example2_info" style="width: 100%;">
                 <thead class="thead-dark">
-                  <tr>
+                  <tr role="row">
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -47,7 +49,7 @@
 
                 <tbody>
                   {{#each bookList}}
-                  <tr>
+                  <tr role="row">
                     <td>{{this.name}}</td>
                     <td>{{this.quantity}}</td>
                     <td>{{this.price}}</td>
@@ -57,7 +59,9 @@
                       {{/each}}
                     </td>
                     <td>{{this.author.name}}</td>
-                    <td>{{this.image}}</td>
+                    <td>
+                      <img src="{{this.image}}" alt="" srcset="" style="width: 30px; height: 30px;">
+                    </td>
                     <td>{{this.date}}</td>
                     <td style="text-align: center;">
                       <a href="/book/update?id={{this._id}}">

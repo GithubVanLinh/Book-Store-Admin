@@ -43,7 +43,7 @@ checkPassword=  (email, password) => {
 
 module.exports = {
   getAllUser: async () => {
-    const allUser = await User.find().exec();
+    const allUser = await User.find({show: true}).exec();
     console.log(allUser);
     return allUser;
   },
