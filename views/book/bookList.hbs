@@ -72,6 +72,28 @@
                   {{/each}}
                 </tbody>
               </table>
+              <!-- Pagination Start -->
+                    <div class="col-md-12">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                {{#ifeq hasPrevPage}}
+                                
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                                </li>
+                                <li class="page-item"><a class="page-link"href="?page={{prevPage}}">{{prevPage}}</a></li>
+                                {{/ifeq}}
+                                <li class="page-item active"><a class="page-link" >{{page}}</a></li>
+                                {{#ifeq hasNextPage}}
+                                <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{nextPage}}">Next</a>
+                                </li>
+                                {{/ifeq}}
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- Pagination Start -->
             </div>
             <!-- /.card-body -->
           </div>

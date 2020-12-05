@@ -2,7 +2,8 @@ const Book = require("../databases/book");
 const Author = require("../databases/author");
 const Category = require("../databases/category");
 const mongoose = require("mongoose");
-const { options } = require("../routes/book");
+
+const LIMIT = 2;
 
 //True if exists
 async function CheckBookExists(bookId) {
@@ -88,12 +89,20 @@ module.exports = {
     return book;
   },
 
-  getAllBook: async () => {
-    const books = await Book.find({ show: true })
-      .populate("author")
-      .populate("category")
-      .exec();
-    console.log(books);
+  getAllBook: async(filter) => {
+    const query = { show: true };
+    const options = {
+      populate: ["author", "category"],
+      page: filter.page,
+      limit: LIMIT
+    };
+    console.log("pre", options);
+    let books;
+    await Book.paginate(query, options)
+    .then(function (result) {
+      console.log("result", result);
+      books = result
+    });
     return books;
   },
 

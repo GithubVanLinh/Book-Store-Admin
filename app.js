@@ -5,6 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const DB = require('./databases/db')();
+const hbs = require('hbs');
 
 const bookRouter = require('./routes/book');
 var indexRouter = require('./routes/index');
@@ -14,6 +15,12 @@ const categoryRouter = require('./routes/category');
 
 var app = express();
 
+hbs.registerHelper('ifeq', function (a, options) {
+  if (a) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
