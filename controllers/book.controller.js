@@ -1,6 +1,6 @@
-const Book = require("../models/book.model");
-const Author = require("../models/author.model");
-const Category = require("../models/category.model");
+const BookModel = require("../models/book.model");
+const AuthorModel = require("../models/author.model");
+const CategoryModel = require("../models/category.model");
 
 module.exports = {
   createANewBook: async (req, res, next) => {
@@ -18,15 +18,23 @@ module.exports = {
     const filter = {};
     console.log(req.query.page);
     filter.page = +req.query.page || 1;
+    filter.category = req.query.category;
     console.log("filter", filter);
-    const bookData = await Book.getAllBook(filter);
+
+    console.log("get data...");
+    const bookData =await BookModel.getAllBook(filter);
+    console.log("get success, Data is: ", bookData.docs);
+
     bookData.bookList = bookData.docs;
+    bookData.category = filter.category;
+
+    bookData.categorys = await CategoryModel.getCategoryList();
     res.render("./book/bookList", bookData);
   },
 
   getCreateBookForm: async (req, res, next) => {
-    const authors = await Author.getAllAuthor();
-    const categories = await Category.getCategoryList();
+    const authors = await AuthorModel.getAllAuthor();
+    const categories = await CategoryModel.getCategoryList();
     res.render("book/createBook", { authors, categories });
   },
 
@@ -45,8 +53,8 @@ module.exports = {
   getUpdateForm: async (req, res, next) => {
     const bookId = req.query.id;
     const book = await Book.getBookById(bookId);
-    const authors = await Author.getAllAuthor();
-    const categories = await Category.getCategoryList();
+    const authors = await AuthorModel.getAllAuthor();
+    const categories = await CategoryModel.getCategoryList();
     // res.send(book.toString());
 
     res.render("./book/update-book", { book, authors, categories });

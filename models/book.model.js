@@ -90,18 +90,19 @@ module.exports = {
   },
 
   getAllBook: async(filter) => {
-    const query = { show: true };
+    let query;
+    if (filter.category) query = { show: true, category: filter.category };
+    else query = { show: true };
     const options = {
       populate: ["author", "category"],
       page: filter.page,
-      limit: LIMIT
+      limit: LIMIT,
     };
     console.log("pre", options);
     let books;
-    await Book.paginate(query, options)
-    .then(function (result) {
+    await Book.paginate(query, options).then(function (result) {
       console.log("result", result);
-      books = result
+      books = result;
     });
     return books;
   },
