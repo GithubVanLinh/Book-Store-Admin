@@ -1,4 +1,6 @@
 require("dotenv").config();
+require("./config/checkEnv")();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -12,6 +14,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const authorRouter = require('./routes/author');
 const categoryRouter = require('./routes/category');
+const checkEnv = require("./config/checkEnv");
 
 var app = express();
 

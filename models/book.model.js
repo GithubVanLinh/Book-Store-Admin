@@ -119,7 +119,7 @@ module.exports = {
 
     const aBook = await validateBookInfo(aNewBookInfo);
     if (aBook === -1) {
-      return -1;
+      return {err: "Validate Failed"};
     }
     console.log("book is valid");
 
