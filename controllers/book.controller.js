@@ -20,25 +20,27 @@ module.exports = {
       formData.key = process.env.KEY;
       formData.image = fs.createReadStream(files.image.path);
       console.log(process.env.ImageServerURL);
-      request.post({url:process.env.ImageServerURL, formData: formData},async function optionalCallback(err, httpResponse, body) {
-        if (err) {
-          return console.error('upload failed:', err);
-        }
-        resp = JSON.parse(body);
-        console.log('Upload successful!  Server responded with:', resp);
+      request.post(
+        { url: process.env.ImageServerURL, formData: formData },
+        async function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+          resp = JSON.parse(body);
+          console.log('Upload successful!  Server responded with:', resp);
 
-        const urlImage = resp.data.medium.url;
-        console.log(urlImage);
-        bodyData.image = urlImage;
+          const urlImage = resp.data.medium.url;
+          console.log(urlImage);
+          bodyData.image = urlImage;
 
-        console.log(bodyData);
+          console.log(bodyData);
 
-        const datares =await BookModel.createANewBook(bodyData);
-        if(datares.err){
-          res.json(datares.err);
-        }
-        res.json(datares);
-      });
+          const datares = await BookModel.createANewBook(bodyData);
+          if (datares.err) {
+            res.json(datares.err);
+          }
+          res.json(datares);
+        });
       //end req
     });
   },
@@ -84,7 +86,7 @@ module.exports = {
     const book = await BookModel.getBookById(bookId);
     const authors = await AuthorModel.getAllAuthor();
     const categories = await CategoryModel.getCategoryList();
-    // res.send(book.toString());
+    // res.send(book);
 
     res.render("./book/update-book", { book, authors, categories });
     // res.send(authors)
