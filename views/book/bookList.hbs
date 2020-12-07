@@ -24,17 +24,20 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">DataTable with minimal features & hover style</h3>
-              <select name="The loai" id="theloai">
-                {{#each categorys}}
-                {{#ifeq _id ../category}}
-                <option selected value="{{_id}}">{{name}}</option>
-                {{else}}
-                <option value="{{_id}}">{{name}}</option>
-                {{/ifeq}}
-                {{/each}}
-              </select>
-              <a class=".card-link" href="/book/add" style="float: right;">
+              <div class="card-title form-inline">
+                <label style="font-weight:normal" for="theloai" style="font-weight: normal;">Filter by category:</h3>
+                <select name="The loai" id="theloai" class="form-control">
+                  <option value="all" selected>All</option>
+                  {{#each categorys}}
+                  {{#ifeq _id ../category}}
+                  <option selected value="{{_id}}">{{name}}</option>
+                  {{else}}
+                  <option value="{{_id}}">{{name}}</option>
+                  {{/ifeq}}
+                  {{/each}}
+                </select>
+              </div>
+              <a href="/book/add" style="float: right;">
                 <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
               </a>
             </div>
