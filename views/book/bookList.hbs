@@ -27,11 +27,11 @@
               <h3 class="card-title">DataTable with minimal features & hover style</h3>
               <select name="The loai" id="theloai">
                 {{#each categorys}}
-                  {{#ifeq _id ../category}}
-                  <option selected value="{{_id}}">{{name}}</option>
-                  {{else}}
-                  <option value="{{_id}}">{{name}}</option>
-                  {{/ifeq}}
+                {{#ifeq _id ../category}}
+                <option selected value="{{_id}}">{{name}}</option>
+                {{else}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/ifeq}}
                 {{/each}}
               </select>
               <a class=".card-link" href="/book/add" style="float: right;">
@@ -82,47 +82,49 @@
                 </tbody>
               </table>
               <!-- Pagination Start -->
-                    <div class="col-md-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                              {{#ifUnd category}}
-                                
-                                {{#ifeq hasPrevPage true}}
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
-                                  </li>
-                                  {{/ifeq}}
-                                  <li class="page-item active"><a class="page-link">{{page}}</a></li>
-                                  {{#ifeq hasNextPage true}}
-                                  <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
-                                  </li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{nextPage}}">Next</a>
-                                  </li>
-                                {{/ifeq}}
-                              {{else}}
-                                {{#ifeq hasPrevPage true}}
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Prev</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="?page={{prevPage}}&category={{category}}">{{prevPage}}</a>
-                                  </li>
-                                  {{/ifeq}}
-                                  <li class="page-item active"><a class="page-link">{{page}}</a></li>
-                                  {{#ifeq hasNextPage true}}
-                                  <li class="page-item"><a class="page-link" href="?page={{nextPage}}&category={{category}}">{{nextPage}}</a>
-                                  </li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
-                                  </li>
-                                {{/ifeq}}
-                              {{/ifUnd}}
-                            </ul>
-                        </nav>
-                    </div>
-                    <!-- Pagination Start -->
+              <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    {{#ifUnd category}}
+
+                    {{#ifeq hasPrevPage true}}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
+                    </li>
+                    {{/ifeq}}
+                    <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                    {{#ifeq hasNextPage true}}
+                    <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{nextPage}}">Next</a>
+                    </li>
+                    {{/ifeq}}
+                    {{else}}
+                    {{#ifeq hasPrevPage true}}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Prev</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                        href="?page={{prevPage}}&category={{category}}">{{prevPage}}</a>
+                    </li>
+                    {{/ifeq}}
+                    <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                    {{#ifeq hasNextPage true}}
+                    <li class="page-item"><a class="page-link"
+                        href="?page={{nextPage}}&category={{category}}">{{nextPage}}</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
+                    </li>
+                    {{/ifeq}}
+                    {{/ifUnd}}
+                  </ul>
+                </nav>
+              </div>
+              <!-- Pagination Start -->
             </div>
             <!-- /.card-body -->
           </div>
@@ -170,7 +172,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
-    $('#theloai').change(function(){
-      window.location.href = "?category=" + $('#theloai')[0].value;
-    });
+  $('#theloai').change(function () {
+    window.location.href = "?category=" + $('#theloai')[0].value;
+  });
 </script>

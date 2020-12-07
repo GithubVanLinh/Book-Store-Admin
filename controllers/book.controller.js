@@ -70,7 +70,7 @@ module.exports = {
   updateANewBook: async (req, res, next) => {
     const aNewBookInfo = req.body;
     console.log("a New Book Info: ", aNewBookInfo);
-    const newBookRes = await Book.updateABook(aNewBookInfo);
+    const newBookRes = await BookModel.updateABook(aNewBookInfo);
     console.log("a Book Res: ", newBookRes);
     if (newBookRes == -1) {
       res.send("update Failed");
@@ -81,7 +81,7 @@ module.exports = {
 
   getUpdateForm: async (req, res, next) => {
     const bookId = req.query.id;
-    const book = await Book.getBookById(bookId);
+    const book = await BookModel.getBookById(bookId);
     const authors = await AuthorModel.getAllAuthor();
     const categories = await CategoryModel.getCategoryList();
     // res.send(book.toString());
@@ -94,7 +94,7 @@ module.exports = {
     const _id = req.body._id;
 
     //id mean real id (_id)
-    const status = await Book.deleteABook(_id);
+    const status = await BookModel.deleteABook(_id);
     res.send("OK");
   },
 };
