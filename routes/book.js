@@ -15,4 +15,6 @@ router.get('/update', BookController.getUpdateForm);
 router.post('/update', BookController.updateANewBook);
 router.post('/delete', BookController.deleteABook);
 
+router.get('/search', BookController.searchBook);
+
 module.exports = router;

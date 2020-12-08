@@ -2,6 +2,19 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
+
+    <form class="form-inline ml-3" action="/book/search" method="GET">
+      <div class="input-group input-group-sm">
+        <input value="{{keyword}}" name="keyword" class="form-control " type="search"
+          placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
@@ -25,17 +38,18 @@
           <div class="card">
             <div class="card-header">
               <div class="card-title form-inline">
-                <label style="font-weight:normal" for="theloai" style="font-weight: normal;">Filter by category:</h3>
-                <select name="The loai" id="theloai" class="form-control">
-                  <option value="all" selected>All</option>
-                  {{#each categorys}}
-                  {{#ifeq _id ../category}}
-                  <option selected value="{{_id}}">{{name}}</option>
-                  {{else}}
-                  <option value="{{_id}}">{{name}}</option>
-                  {{/ifeq}}
-                  {{/each}}
-                </select>
+                <label style="font-weight:normal" for="theloai" style="font-weight: normal;">Filter by
+                  category:&nbsp;&nbsp;</h3>
+                  <select name="The loai" id="theloai" class="form-control">
+                    <option value="all" selected>All</option>
+                    {{#each categories}}
+                    {{#ifeq _id ../category}}
+                    <option selected value="{{_id}}">{{name}}</option>
+                    {{else}}
+                    <option value="{{_id}}">{{name}}</option>
+                    {{/ifeq}}
+                    {{/each}}
+                  </select>
               </div>
               <a href="/book/add" style="float: right;">
                 <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
@@ -83,9 +97,11 @@
                 </tbody>
               </table>
               <!-- Pagination Start -->
+              <br>
               <div class="col-md-12">
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center">
+                    {{#ifUnd keyword}}
                     {{#ifUnd category}}
 
                     {{#ifeq hasPrevPage true}}
@@ -95,7 +111,9 @@
                     <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
                     </li>
                     {{/ifeq}}
+
                     <li class="page-item active"><a class="page-link">{{page}}</a></li>
+
                     {{#ifeq hasNextPage true}}
                     <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
                     </li>
@@ -119,6 +137,26 @@
                     </li>
                     <li class="page-item">
                       <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
+                    </li>
+                    {{/ifeq}}
+                    {{/ifUnd}}
+
+                    {{else}}
+                    {{#ifeq hasPrevPage true}}
+                    <li class="page-item">
+                      <a class="page-link" href="?keyword={{keyword}}&page={{prevPage}}" tabindex="-1">Prev</a>
+                    </li>
+                    <li class="page-item"><a class="page-link"
+                        href="?keyword={{keyword}}&page={{prevPage}}">{{prevPage}}</a>
+                    </li>
+                    {{/ifeq}}
+                    <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                    {{#ifeq hasNextPage true}}
+                    <li class="page-item"><a class="page-link"
+                        href="?keyword={{keyword}}&page={{nextPage}}">{{nextPage}}</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="?keyword={{keyword}}&page={{nextPage}}">Next</a>
                     </li>
                     {{/ifeq}}
                     {{/ifUnd}}

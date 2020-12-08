@@ -1,7 +1,10 @@
+const mongoose = require("mongoose");
+
 const Book = require("../databases/book");
 const Author = require("../databases/author");
 const Category = require("../databases/category");
-const mongoose = require("mongoose");
+const Search = require("../utils/search-util")
+
 
 const LIMIT = 5;
 
@@ -173,4 +176,43 @@ module.exports = {
       return -1;
     }
   },
+
+  searchBooks: async (query) => {
+    try {
+      const result = await Book.find({ $text: { $search: query } });
+      return result;
+    } catch (error) {
+      console.log('search failed!');
+      return -1;
+    }
+  },
+
+  search: async (keyword, page) => {
+    let query = { 
+      show: true,
+      name: new RegExp(keyword, 'gi')
+    };
+    const options = {
+      populate: ["author", "category"],
+      page: page,
+      limit: LIMIT,
+    };
+
+
+    // let results = [];
+    // let books = await Book.find({})
+    //   .populate('author')
+    //   .populate('category')
+    //   .exec();
+    // for (let i = 0; i < books.length; i++) {
+    //   let bookName = Search.removeAccents(books[i].name);
+    //   if (bookName.includes(keyword)) {
+    //     results.push(books[i]);
+    //   }
+    // }
+
+    const result = await Book.paginate(query, options);
+
+    return result;
+  }
 };

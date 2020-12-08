@@ -3,10 +3,10 @@ const formidable = require("formidable");
 const fs = require("fs");
 const request = require("request");
 
-
 const BookModel = require("../models/book.model");
 const AuthorModel = require("../models/author.model");
 const CategoryModel = require("../models/category.model");
+const Search = require("../utils/search-util")
 
 module.exports = {
   createANewBook: async (req, res, next) => {
@@ -59,8 +59,10 @@ module.exports = {
     bookData.bookList = bookData.docs;
     bookData.category = filter.category;
 
-    bookData.categorys = await CategoryModel.getCategoryList();
+    bookData.categories = await CategoryModel.getCategoryList();
+    // res.send(bookData);
     res.render("./book/bookList", bookData);
+
   },
 
   getCreateBookForm: async (req, res, next) => {
@@ -99,4 +101,34 @@ module.exports = {
     const status = await BookModel.deleteABook(_id);
     res.send("OK");
   },
+
+  searchBooks: async (req, res, next) => {
+    const q = req.query.keyword;
+    console.log(q);
+    const result = await BookModel.searchBooks(q);
+    if(result !== -1){
+      res.json(result);
+    } else {
+      res.send('search failed!');
+    }
+  },
+  
+  searchBook: async (req, res, next) => {
+    let page = +req.query.page || 1;
+
+    // const keyword = Search.removeAccents(req.query.keyword);
+    const keyword = req.query.keyword;
+    const bookData = await BookModel.search(keyword, page);
+    // res.send(results);
+    bookData.bookList = bookData.docs;
+    // bookData.category = category;
+    bookData.keyword = keyword;
+
+    // bookData.categories = await CategoryModel.getCategoryList();
+    res.render("./book/bookList", bookData);
+    // res.send(bookData);
+
+  },
+
+
 };
