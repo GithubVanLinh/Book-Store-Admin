@@ -90,7 +90,7 @@
     <div class="modal fade" id="modal-info" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content bg-info">
-                <form id="update-form" action="/users/block">
+                <form id="update-form">
                     <div class="modal-header">
                         <h4 class="modal-title">Info</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,7 +123,8 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="submit" class="btn btn-danger btn-block"><i class="fa fa-bell"></i>block</button>
+                        <button id="btn-change" type="button" class="btn btn-danger btn-block"><i
+                                class="fa fa-bell"></i>block</button>
                     </div>
                 </form>
             </div>
@@ -134,13 +135,15 @@
     <script>
         function info(isBlocked) {
             if (isBlocked) {
-                $("#modal-info").find('[type="submit"]').attr('class', "btn btn-primary btn-block");
-                $("#modal-info").find('[type="submit"]').html("<b>Unblock</b>");
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
             } else {
-                $("#modal-info").find('[type="submit"]').attr('class', "btn btn-danger btn-block");
-                $("#modal-info").find('[type="submit"]').html("<b>Block</b>");
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Block</b>");
             }
         }
+
+
 
         function sync(id) {
             const xhttp = new XMLHttpRequest();
@@ -151,32 +154,37 @@
                     $("#modal-info").find('[name="full_name"]')[0].value = user.full_name || "";
                     $("#modal-info").find('[name="address"]')[0].value = user.address || "";
                     $("#modal-info").find('[name="phone_number"]')[0].value = user.phone_number || "";
-                    console.log(user);
                     info(user.isBlocked);
                 }
             };
             xhttp.open("GET", "/api/users/" + id, true);
             xhttp.send();
         }
+        function changeStateBlocked(id) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    sync(id);
+                }
+            };
+            xhttp.open("POST", "/users/block", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("id=" + id);
+        }
         $(document).ready(function () {
 
             $('[data-toggle="modal"]').click(function () {
                 const id = $(this).parent().parent().find('td:first')[0].innerText;
                 sync(id);
+
+                $("#modal-info").find('#btn-change')[0].onclick = function () {
+                    alert("click OK");
+                    if (confirm)
+                        changeStateBlocked(id);
+                }
             });
 
-            btn_submit.click(function () {
-                const id = $(this).parent().parent().find('td:first')[0].innerText;
-                const xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        const user = JSON.parse(this.responseText);
 
-                    }
-                };
-                xhttp.open("UPDATE", "/api/users/block", true);
-                xhttp.send();
-            })
         })
 
     </script>

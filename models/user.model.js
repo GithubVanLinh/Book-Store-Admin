@@ -37,5 +37,13 @@ module.exports = {
   getUserById: async (id) =>{
     const user = await User.findOne({_id:id, show: true});
     return user;
+  },
+  updateUserByEmail: async (email, profile)=>{
+    const resdata = await User.updateOne({email: email}, profile);
+    return resdata;
+  },
+  updateUserById: async (id, profile)=>{
+    const resdata = await User.updateOne({_id: id}, profile);
+    return resdata;
   }
 };

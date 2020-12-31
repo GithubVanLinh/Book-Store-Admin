@@ -31,5 +31,13 @@ module.exports = {
     console.log("body", body);
     const user = await UserModel.updateUserById(email, body);
     res.send('update success');
+  },
+  blockUser: async (req, res, next)=>{
+    const id = req.body.id;
+    console.log(id);
+    const user = await UserModel.getUserById(id);
+    console.log(user);
+    const usr = await UserModel.updateUserById({_id: id}, {isBlocked: !user.isBlocked});
+    res.json(usr);
   }
 };
