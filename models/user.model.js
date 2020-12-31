@@ -1,28 +1,5 @@
-// const accounts = [
-//     {
-//         email: "admin1@g.com",
-//         password: "1",
-//         first_name: "A",
-//         last_name: "B",
-//         mobile_number: "0123456789"
-//     },
-//     {
-//         email: "admin2g.com",
-//         password: "1",
-//         first_name: "A",
-//         last_name: "B",
-//         mobile_number: "0123456789"
-//     },
-//     {
-//         email: "admin3@g.com",
-//         password: "1",
-//         first_name: "A",
-//         last_name: "B",
-//         mobile_number: "0123456789"
-//     }
-// ]
 const User = require("../databases/user");
-
+const LIMIT = 5;
 //function
 checkEmailExists = async function (email) {
   console.log(email);
@@ -42,21 +19,23 @@ checkPassword=  (email, password) => {
 };
 
 module.exports = {
-  getAllUser: async () => {
-    const allUser = await User.find({show: true}).exec();
-    console.log(allUser);
-    return allUser;
+  getAllUser: async (filter) => {
+    let query = {};
+    query.show= true;
+    const options = {
+      page: filter.page,
+      limit: LIMIT,
+    };
+    console.log("pre", options);
+    let users;
+    await User.paginate(query, options).then(function (result) {
+      console.log("result", result);
+      users = result;
+    });
+    return users;
   },
-
-  addNewAccount: async (accountInfo) => {
-    const isEmailExists = await checkEmailExists(accountInfo.email);
-    if (isEmailExists) {
-      console.log("Email has been used");
-      return -1;
-    }
-    //Regist Email is not exists
-    const userRes = await User.create(accountInfo);
-    console.log(userRes);
-    return userRes;
-  },
+  getUserById: async (id) =>{
+    const user = await User.findOne({_id:id, show: true});
+    return user;
+  }
 };

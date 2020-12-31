@@ -1,0 +1,80 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown content-wrapper">
+    <div class="col">
+
+        <div class="card card-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-warning">
+                <div class="widget-user-image">
+                    <img class="img-circle elevation-2" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                </div>
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">{{user.full_name}}</h3>
+                <h5 class="widget-user-desc">{{user.email}}</h5>
+            </div>
+            <div class="card-footer p-0">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            Address: {{user.address}}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link">
+                            Phone Number: {{user.phone_number}}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-warning" data-toggle="modal"
+                            data-target="#modal-edit-profile">
+                            Edit
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal fade" id="modal-edit-profile" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <form action="/admin/profile" method="POST">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Default Modal</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Address</label>
+                                    <input type="text" class="form-control" id="exampleInputEmail1" name="address"
+                                        placeholder="address" value="{{user.address}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Phone number</label>
+                                    <input type="tel" class="form-control" id="exampleInputPassword1" name="phone_number"
+                                        placeholder="phone_number" value="{{user.phone_number}}">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                </div>
+                <!-- /.modal-content -->
+
+            </form>
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
