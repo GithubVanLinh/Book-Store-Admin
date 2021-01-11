@@ -16,11 +16,11 @@ module.exports = {
 
     console.log(categoryUpdate);
 
-    await Category.updateCategoryById(categoryUpdate._id, categoryUpdate);
+    const id = categoryUpdate.id;
+    delete categoryUpdate.id;
+    await Category.updateCategoryById(id, categoryUpdate);
 
-    const userUrl = req.originalUrl;
-    console.log("userUrl", userUrl);
-    res.redirect(userUrl);
+    res.json({updated: true});
   },
   getAllCategory: async (req, res, next) => {
       const page = req.query.page || 1;

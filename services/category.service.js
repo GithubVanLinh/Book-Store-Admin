@@ -42,5 +42,8 @@ module.exports = {
     getCategoryByIdJSON: async (id) =>{
         const category = await Category.findOne({_id: id, show: true});
         return category;
+    },
+    updateCategoryById: async (id, newCategory)=>{
+        const category = await Category.updateOne({_id: id}, newCategory);
     }
 }

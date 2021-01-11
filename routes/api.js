@@ -12,6 +12,7 @@ const { authLogin } = require("../middlewares/auth.mdw");
 
 router.get("/users/:id", authLogin, UserController.getUserByIdAPI);
 router.get("/categories/:id", authLogin, CategoryController.getCategoryJSON);
+router.put("/categories", authLogin, CategoryController.updateCategoryById)
 
 
 module.exports = router;

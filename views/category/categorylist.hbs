@@ -121,8 +121,7 @@
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button id="btn-change" type="button" class="btn btn-danger btn-block"><i
-                                class="fa fa-bell"></i>block</button>
+                        <button id="btn-change" type="button" class="btn btn-primary btn-block">Update</button>
                     </div>
                 </form>
             </div>
@@ -152,31 +151,39 @@
 
 
 
-    function sync(id, element) {
+    function sync(id, nameE, descriptionE) {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText)
                 const category = JSON.parse(this.responseText);
-                
                 $("#modal-info").find('[name="name"]')[0].value = category.name || "";
                 $("#modal-info").find('[name="description"]')[0].value = category.description || "";
                 
+                if(nameE){
+                    nameE.innerText = category.name;
+                    descriptionE.innerText = category.description;
+                }
             }
         };
+
         xhttp.open("GET", "/api/categories/" + id, true);
         xhttp.send();
     }
-    function changeStateBlocked(id, element) {
+    function update(id, nameE, descriptionE) {
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                sync(id, element);
+                alert("update success");
+                sync(id, nameE, descriptionE);
             }
         };
-        xhttp.open("POST", "/users/block", true);
+
+        const name = $("#modal-info").find('[name="name"]')[0].value;
+        const description= $("#modal-info").find('[name="description"]')[0].value;
+        xhttp.open("PUT", "/api/categories", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("id=" + id);
+        xhttp.send(`id=${id}&name=${name}&description=${description}`);
     }
     $(document).ready(function () {
 
@@ -187,7 +194,7 @@
             sync(id);
 
             $("#modal-info").find('#btn-change')[0].onclick = function () {
-                changeStateBlocked(id, blockElement);
+                update(id, nameElement, descriptionElement);
             }
         });
 
