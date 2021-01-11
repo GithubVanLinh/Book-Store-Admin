@@ -1,36 +1,61 @@
 <div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Sửa sách</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="/books">Danh sách sách</a></li>
+                        <li class="breadcrumb-item active">Sửa sách</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
     <div class="row justify-content-center">
         <div class="col-sm-8 mt-3">
             <h4>Update book</h4>
 
-            <form action="/book/update" method="POST">
+            <form action="/books/update" method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{book.name}}" />
+                        <input type="text" class="form-control" id="name" name="name" value="{{book.name}}" required />
                     </div>
                     <div class="form-group col-md-4">
                         <label for="id">ID:</label>
-                        <input type="text" class="form-control" id="id" name="id" value="{{book.id}}">
+                        <input type="text" class="form-control" id="id" name="id" value="{{book.id}}" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="author">Author:</label>
-                        {{!-- <input type="text" class="form-control" id="author" name="author" value="{{book.author}}"> --}}
-                        <select class="form-control" name="author" id="author">
-                            <option value="{{book.author}}" selected>{{book.author.name}}</option>
+                        {{!-- <input type="text" class="form-control" id="author" name="author" value="{{book.author}}">
+                        --}}
+                        <select class="form-control" name="author" id="author" required>
                             {{#each authors}}
+                            {{#ifeq this._id ../book.author._id}}
+                            <option selected value="{{this._id}}">{{this.name}}</option>
+                            {{else}}
                             <option value="{{this._id}}">{{this.name}}</option>
+                            {{/ifeq}}
                             {{/each}}
                         </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="category">Category:</label>
-                        {{!-- <input type="text" class="form-control" id="category" name="category" value="{{book.category}}"> --}}
+                        {{!-- <input type="text" class="form-control" id="category" name="category"
+                            value="{{book.category}}"> --}}
                         <select class="form-control" name="category" id="category" multiple>
                             {{#each categories}}
+                            {{#ifIn this._id ../book.category}}
+                            <option selected value="{{this._id}}">{{this.name}}</option>
+                            {{else}}
                             <option value="{{this._id}}">{{this.name}}</option>
+                            {{/ifIn}}
                             {{/each}}
                         </select>
                     </div>
@@ -39,16 +64,17 @@
                     <div class="form-group col-md-6">
                         <label for="quantity">Quantity:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity"
-                            value="{{book.quantity}}">
+                            value="{{book.quantity}}" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="price">Price:</label>
-                        <input type="number" class="form-control" id="price" name="price" value="{{book.price}}">
+                        <input type="number" class="form-control" id="price" name="price" value="{{book.price}}"
+                            required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="image">Image url:</label>
-                    <input type="url" class="form-control" id="image" name="image" value="{{book.image}}">
+                    <input type="url" class="form-control" id="image" name="image" value="{{book.image}}" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
@@ -56,9 +82,10 @@
                         value="{{book.description}}">
                 </div>
                 <input type="hidden" id="_id" name="_id" value="{{book._id}}" style="visibility: hidden;">
-                <button type="submit" class="btn btn-primary">Update</button></a>
-
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="/books/delete/{{book._id}}" class="btn btn-danger" id="btn-delete">Delete</a>
             </form>
+
         </div>
     </div>
     <hr />

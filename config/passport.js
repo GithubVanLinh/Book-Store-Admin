@@ -1,6 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const Admin = require("../models/admin.model");
+const Admin = require("../services/admin.service");
 const crypto = require("crypto");
 
 var hashPwd = function hashPwd(salt, pwd) {

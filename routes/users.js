@@ -7,7 +7,7 @@ const UserController = require('../controllers/user.controller');
 /* GET users listing. */
 router.get('/',authLogin, UserController.showAllUser);
 
-router.get('/:id', authLogin, UserController.updateUserById);
+router.get('/update/:id', authLogin, UserController.updateUserById);
 
 router.post('/block', authLogin, UserController.blockUser);
 

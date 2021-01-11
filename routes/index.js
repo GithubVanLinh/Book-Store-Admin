@@ -3,15 +3,8 @@ var router = express.Router();
 
 const bookController = require('../controllers/book.controller');
 const { authLogin } = require('../middlewares/auth.mdw');
-const bookModel = require('../models/book.model');
+const indexController = require('../controllers/index.controller');
 
 /* GET home page. */
-router.get('/',authLogin, function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-router.get('/login',authLogin, bookController.getAllBook);
-
-router.get('/',authLogin, function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/',authLogin, indexController.getHomePage);
 module.exports = router;

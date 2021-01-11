@@ -1,4 +1,4 @@
-const Admin = require("../databases/admin");
+const Admin = require("../models/admin");
 const passport = require("passport");
 const crypto = require("crypto");
 

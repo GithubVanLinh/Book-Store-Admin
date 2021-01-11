@@ -1,4 +1,4 @@
-const User = require("../databases/user");
+const User = require("../models/user");
 const LIMIT = 5;
 //function
 checkEmailExists = async function (email) {
@@ -45,5 +45,9 @@ module.exports = {
   updateUserById: async (id, profile)=>{
     const resdata = await User.updateOne({_id: id}, profile);
     return resdata;
+  },
+  getNumberOfUser: async () =>{
+    const count = await User.find({show: true}).count();
+    return count;
   }
 };

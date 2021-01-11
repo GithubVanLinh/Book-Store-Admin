@@ -1,9 +1,9 @@
-const Book = require("../databases/book");
-const Author = require("../databases/author");
-const Category = require("../databases/category");
+const Book = require("../models/book");
+const Author = require("../models/author");
+const Category = require("../models/category");
 const mongoose = require("mongoose");
 
-const LIMIT = 2;
+const LIMIT = 10;
 
 //True if exists
 async function CheckBookExists(bookId) {
@@ -94,7 +94,13 @@ module.exports = {
     if (filter.category) query = { show: true, category: filter.category };
     else query = { show: true };
     const options = {
-      populate: ["author", "category"],
+      populate: [{
+        path :"author",
+        match: {show: true}
+      }, {
+        path :"category",
+        match: {show: true}
+      }],
       page: filter.page,
       limit: LIMIT,
     };
@@ -167,4 +173,11 @@ module.exports = {
       return -1;
     }
   },
+  statisticsByDay: async (date) =>{
+    const dateR = new Date(date);
+    console.log(dateR);
+
+    
+  }
+
 };

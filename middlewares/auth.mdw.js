@@ -12,8 +12,9 @@ module.exports = {
     },
     authNotLogin: (req, res, next)=>{
         if(!req.isAuthenticated()){
-            next();
+            return next();
         }
+        res.redirect('/')
     },
     logged: async (req, res, next)=>{
         if (req.isAuthenticated()){

@@ -9,4 +9,5 @@ router.get("/",authLogin, CategoryController.getAllCategory);
 router.get("/add",authLogin, CategoryController.getAddCategoryForm);
 router.post("/add",authLogin, CategoryController.addNewCategory);
 
+
 module.exports = router;

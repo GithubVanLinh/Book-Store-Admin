@@ -1,4 +1,4 @@
-const Bill = require('../databases/bill');
+const Bill = require('../models/bill');
 
 module.exports = {
     createBill: (billData)=>{

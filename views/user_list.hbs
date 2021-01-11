@@ -2,7 +2,21 @@
 
 <div class="wrapper fadeInDown content-wrapper">
     <!------ Include the above in your HEAD tag ---------->
-
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Danh sách người dùng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Danh sách người dùng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -47,7 +61,7 @@
                                 <td>{{this.isBlocked}}</td>
                                 <td><button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#modal-info">
-                                        <i class="fas fa-edit"></i> Edit
+                                        <i class="fas fa-edit"></i> 
                                     </button>
 
                                 </td>
@@ -133,19 +147,21 @@
         <!-- /.modal-dialog -->
     </div>
     <script>
-        function info(isBlocked) {
+        function info(isBlocked, element) {
             if (isBlocked) {
                 $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
                 $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
+                element.innerText = "true"
             } else {
                 $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
                 $("#modal-info").find('#btn-change').html("<b>Block</b>");
+                element.innerText = "false"
             }
         }
 
 
 
-        function sync(id) {
+        function sync(id, element) {
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -154,17 +170,17 @@
                     $("#modal-info").find('[name="full_name"]')[0].value = user.full_name || "";
                     $("#modal-info").find('[name="address"]')[0].value = user.address || "";
                     $("#modal-info").find('[name="phone_number"]')[0].value = user.phone_number || "";
-                    info(user.isBlocked);
+                    info(user.isBlocked, element);
                 }
             };
             xhttp.open("GET", "/api/users/" + id, true);
             xhttp.send();
         }
-        function changeStateBlocked(id) {
+        function changeStateBlocked(id, element) {
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    sync(id);
+                    sync(id, element);
                 }
             };
             xhttp.open("POST", "/users/block", true);
@@ -175,12 +191,11 @@
 
             $('[data-toggle="modal"]').click(function () {
                 const id = $(this).parent().parent().find('td:first')[0].innerText;
+                const blockElement = $(this).parent().parent().find('td:nth-child(6)')[0];
                 sync(id);
 
                 $("#modal-info").find('#btn-change')[0].onclick = function () {
-                    alert("click OK");
-                    if (confirm)
-                        changeStateBlocked(id);
+                    changeStateBlocked(id, blockElement);
                 }
             });
 

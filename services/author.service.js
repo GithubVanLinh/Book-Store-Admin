@@ -1,4 +1,4 @@
-const Author = require('../databases/author');
+const Author = require('../models/author');
 
 module.exports = {
     addNewAuthor: async (authorData) => {

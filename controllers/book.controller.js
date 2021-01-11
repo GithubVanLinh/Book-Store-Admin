@@ -3,10 +3,11 @@ const formidable = require("formidable");
 const fs = require("fs");
 const request = require("request");
 
+const BookModel = require("../services/book.service");
+const AuthorModel = require("../services/author.service");
+const CategoryModel = require("../services/category.service");
 
-const BookModel = require("../models/book.model");
-const AuthorModel = require("../models/author.model");
-const CategoryModel = require("../models/category.model");
+function verifyBook(bookData) {}
 
 module.exports = {
   createANewBook: async (req, res, next) => {
@@ -20,25 +21,33 @@ module.exports = {
       formData.key = process.env.KEY;
       formData.image = fs.createReadStream(files.image.path);
       console.log(process.env.ImageServerURL);
-      request.post({url:process.env.ImageServerURL, formData: formData},async function optionalCallback(err, httpResponse, body) {
-        if (err) {
-          return console.error('upload failed:', err);
+      request.post(
+        { url: process.env.ImageServerURL, formData: formData },
+        async function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error("upload failed:", err);
+          }
+          resp = JSON.parse(body);
+          console.log("Upload successful!  Server responded with:", resp);
+
+          const urlImage = resp.data.url;
+          console.log(urlImage);
+          bodyData.image = urlImage;
+
+          console.log(bodyData);
+
+          const isVerify = verifyBook(bodyData);
+          let datares;
+          
+          if (isVerify)
+            datares = await BookModel.createANewBook(bodyData);
+          else res.redirect("/books");
+          if (datares.err) {
+            res.json(datares.err);
+          }
+          res.json(datares);
         }
-        resp = JSON.parse(body);
-        console.log('Upload successful!  Server responded with:', resp);
-
-        const urlImage = resp.data.medium.url;
-        console.log(urlImage);
-        bodyData.image = urlImage;
-
-        console.log(bodyData);
-
-        const datares =await BookModel.createANewBook(bodyData);
-        if(datares.err){
-          res.json(datares.err);
-        }
-        res.json(datares);
-      });
+      );
       //end req
     });
   },
@@ -70,7 +79,7 @@ module.exports = {
   updateANewBook: async (req, res, next) => {
     const aNewBookInfo = req.body;
     console.log("a New Book Info: ", aNewBookInfo);
-    const newBookRes = await Book.updateABook(aNewBookInfo);
+    const newBookRes = await BookModel.updateABook(aNewBookInfo);
     console.log("a Book Res: ", newBookRes);
     if (newBookRes == -1) {
       res.send("update Failed");
@@ -81,7 +90,7 @@ module.exports = {
 
   getUpdateForm: async (req, res, next) => {
     const bookId = req.query.id;
-    const book = await Book.getBookById(bookId);
+    const book = await BookModel.getBookById(bookId);
     const authors = await AuthorModel.getAllAuthor();
     const categories = await CategoryModel.getCategoryList();
     // res.send(book.toString());
@@ -94,7 +103,15 @@ module.exports = {
     const _id = req.body._id;
 
     //id mean real id (_id)
-    const status = await Book.deleteABook(_id);
+    const status = await BookModel.deleteABook(_id);
     res.send("OK");
+  },
+  statisticsByDay: async (req, res, next) => {
+    const query = req.query;
+    console.log(query);
+
+    if (query.Data) {
+      const books = await BookModel.statisticsByDay(query.Date);
+    }
   },
 };

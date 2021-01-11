@@ -1,4 +1,4 @@
-const UserModel = require('../models/user.model');
+const UserModel = require('../services/user.service');
 
 module.exports = {
   showAllUser: async (req, res, next)=>{
@@ -16,6 +16,7 @@ module.exports = {
     res.render('user_list', {users: users});
   },
   getPersonalProfile: (req, res, next) =>{
+    //password Wabc12345
     res.render('profile');
   },
   getUserByIdAPI:async (req, res, next) =>{

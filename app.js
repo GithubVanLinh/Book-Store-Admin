@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const mongo = require("./databases/db")();
+const mongo = require("./models/db")();
 const hbs = require("hbs");
 const session = require("express-session");
 const passport = require("passport");
@@ -18,6 +18,7 @@ const categoryRoute = require('./routes/category');
 const userRoute = require('./routes/users');
 const adminRoute = require('./routes/admin');
 const apiRoute = require('./routes/api');
+const { authLogin } = require("./middlewares/auth.mdw");
 
 var app = express();
 // view engine setup
@@ -47,6 +48,7 @@ app.use("/admin", adminRoute);
 app.use("/api", apiRoute);
 
 // catch 404 and forward to error handler
+app.use(authLogin);
 app.use(function (req, res, next) {
   next(createError(404));
 });

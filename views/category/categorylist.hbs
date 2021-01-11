@@ -24,7 +24,6 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">DataTable with minimal features & hover style</h3>
                             <a class=".card-link" href="/category/add" style="float: right;">
                                 <button class="btn" style="background-color: #2980b9;color: white;">Create
                                     category</button>
@@ -38,6 +37,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Description</th>
+                                        <th>options</th>
                                     </tr>
                                 </thead>
 
@@ -47,10 +47,43 @@
                                         <td>{{this._id}}</td>
                                         <td>{{this.name}}</td>
                                         <td>{{this.description}}</td>
+                                        <td style="text-align: center;">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal-info">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     {{/each}}
                                 </tbody>
                             </table>
+                            <!-- Pagination Start -->
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+
+
+                                        {{#ifeq hasPrevPage true}}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link"
+                                                href="?page={{prevPage}}">{{prevPage}}</a>
+                                        </li>
+                                        {{/ifeq}}
+                                        <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                                        {{#ifeq hasNextPage true}}
+                                        <li class="page-item"><a class="page-link"
+                                                href="?page={{nextPage}}">{{nextPage}}</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{nextPage}}">Next</a>
+                                        </li>
+                                        {{/ifeq}}
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- Pagination Start -->
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -63,26 +96,102 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    <div class="modal fade" id="modal-info" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-info">
+                <form id="update-form">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Info</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="name">Tên</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Nhập tên">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Mô tả</label>
+                                <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="Nhập mô tả">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button id="btn-change" type="button" class="btn btn-danger btn-block"><i
+                                class="fa fa-bell"></i>block</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
 <!-- /.content-wrapper -->
 <!-- page script -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
+
 <script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
+    function info(isBlocked, element) {
+        if (isBlocked) {
+            $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+            $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
+            element.innerText = "true"
+        } else {
+            $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
+            $("#modal-info").find('#btn-change').html("<b>Block</b>");
+            element.innerText = "false"
+        }
+    }
+
+
+
+    function sync(id, element) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                const category = JSON.parse(this.responseText);
+                
+                $("#modal-info").find('[name="name"]')[0].value = category.name || "";
+                $("#modal-info").find('[name="description"]')[0].value = category.description || "";
+                
+            }
+        };
+        xhttp.open("GET", "/api/categories/" + id, true);
+        xhttp.send();
+    }
+    function changeStateBlocked(id, element) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                sync(id, element);
+            }
+        };
+        xhttp.open("POST", "/users/block", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + id);
+    }
+    $(document).ready(function () {
+
+        $('[data-toggle="modal"]').click(function () {
+            const id = $(this).parent().parent().find('td:first')[0].innerText;
+            const nameElement = $(this).parent().parent().find('td:nth-child(2)')[0];
+            const descriptionElement = $(this).parent().parent().find('td:nth-child(3)')[0];
+            sync(id);
+
+            $("#modal-info").find('#btn-change')[0].onclick = function () {
+                changeStateBlocked(id, blockElement);
+            }
         });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": true,
-            "responsive": true,
-        });
-    });
+
+
+    })
+
 </script>
