@@ -1,4 +1,4 @@
-const Author = require('../models/author.model');
+const Author = require('../services/author.service');
 
 module.exports = {
     addNewAuthor: async (req, res, next) => {

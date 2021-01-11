@@ -9,8 +9,8 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">DataTables</li>
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Danh sách sách</li>
           </ol>
         </div>
       </div>
@@ -24,105 +24,108 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">DataTable with minimal features & hover style</h3>
               <select name="The loai" id="theloai">
                 {{#each categorys}}
-                  {{#ifeq _id ../category}}
-                  <option selected value="{{_id}}">{{name}}</option>
-                  {{else}}
-                  <option value="{{_id}}">{{name}}</option>
-                  {{/ifeq}}
+                {{#ifeq _id ../category}}
+                <option selected value="{{_id}}">{{name}}</option>
+                {{else}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/ifeq}}
                 {{/each}}
               </select>
-              <a class=".card-link" href="/book/add" style="float: right;">
+              <a class=".card-link" href="/books/add" style="float: right;">
                 <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
               </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
               {{!-- <table id="example2" class="table table-bordered table-hover"> --}}
-              <table id="example1" class="table table-bordered table-hover dataTable dtr-inline collapsed" role="grid"
-                aria-describedby="example2_info" style="width: 100%;">
-                <thead class="thead-dark">
-                  <tr role="row">
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Author</th>
-                    <th>Image</th>
-                    <th>Date</th>
-                    <th>Option</th>
-                  </tr>
-                </thead>
+                <table id="example1" class="table table-bordered table-hover dataTable dtr-inline collapsed" role="grid"
+                  aria-describedby="example2_info" style="width: 100%;">
+                  <thead class="thead-dark">
+                    <tr role="row">
+                      <th>Name</th>
+                      <th>Quantity</th>
+                      <th>Quantity Of Sale</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Author</th>
+                      <th>Image</th>
+                      <th>Date</th>
+                      <th>Option</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {{#each bookList}}
-                  <tr role="row">
-                    <td>{{this.name}}</td>
-                    <td>{{this.quantity}}</td>
-                    <td>{{this.price}}</td>
-                    <td>
-                      {{#each this.category}}
-                      {{this.name}} <span>, </span>
-                      {{/each}}
-                    </td>
-                    <td>{{this.author.name}}</td>
-                    <td>
-                      <img src="{{this.image}}" alt="" srcset="" style="width: 30px; height: 30px;">
-                    </td>
-                    <td>{{this.date}}</td>
-                    <td style="text-align: center;">
-                      <a href="/book/update?id={{this._id}}">
-                        <i class="far fa-edit"></i>
-                      </a>
-                    </td>
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-              <!-- Pagination Start -->
-                    <div class="col-md-12">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center">
-                              {{#ifUnd category}}
-                                
-                                {{#ifeq hasPrevPage true}}
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
-                                  </li>
-                                  {{/ifeq}}
-                                  <li class="page-item active"><a class="page-link">{{page}}</a></li>
-                                  {{#ifeq hasNextPage true}}
-                                  <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
-                                  </li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{nextPage}}">Next</a>
-                                  </li>
-                                {{/ifeq}}
-                              {{else}}
-                                {{#ifeq hasPrevPage true}}
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Prev</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="?page={{prevPage}}&category={{category}}">{{prevPage}}</a>
-                                  </li>
-                                  {{/ifeq}}
-                                  <li class="page-item active"><a class="page-link">{{page}}</a></li>
-                                  {{#ifeq hasNextPage true}}
-                                  <li class="page-item"><a class="page-link" href="?page={{nextPage}}&category={{category}}">{{nextPage}}</a>
-                                  </li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
-                                  </li>
-                                {{/ifeq}}
-                              {{/ifUnd}}
-                            </ul>
-                        </nav>
-                    </div>
-                    <!-- Pagination Start -->
+                  <tbody>
+                    {{#each bookList}}
+                    <tr role="row">
+                      <td>{{this.name}}</td>
+                      <td>{{this.quantity}}</td>
+                      <td>{{this.quantity_sold}}</td>
+                      <td>{{this.price}}</td>
+                      <td>
+                        {{#each this.category}}
+                        {{this.name}} <span>, </span>
+                        {{/each}}
+                      </td>
+                      <td>{{this.author.name}}</td>
+                      <td>
+                        <img src="{{this.image}}" alt="" srcset="" style="width: 30px; height: 30px;">
+                      </td>
+                      <td>{{this.date}}</td>
+                      <td style="text-align: center;">
+                        <a href="/books/update?id={{this._id}}">
+                          <i class="far fa-edit"></i>
+                        </a>
+                      </td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                      {{#ifUnd category}}
+
+                      {{#ifeq hasPrevPage true}}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
+                      </li>
+                      {{/ifeq}}
+                      <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                      {{#ifeq hasNextPage true}}
+                      <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{nextPage}}">Next</a>
+                      </li>
+                      {{/ifeq}}
+                      {{else}}
+                      {{#ifeq hasPrevPage true}}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Prev</a>
+                      </li>
+                      <li class="page-item"><a class="page-link"
+                          href="?page={{prevPage}}&category={{category}}">{{prevPage}}</a>
+                      </li>
+                      {{/ifeq}}
+                      <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                      {{#ifeq hasNextPage true}}
+                      <li class="page-item"><a class="page-link"
+                          href="?page={{nextPage}}&category={{category}}">{{nextPage}}</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
+                      </li>
+                      {{/ifeq}}
+                      {{/ifUnd}}
+                    </ul>
+                  </nav>
+                </div>
+                <!-- Pagination Start -->
             </div>
             <!-- /.card-body -->
           </div>
@@ -136,41 +139,12 @@
   </section>
   <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
-{{!-- <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.0.5
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
-  </footer> --}}
 
-<!-- Control Sidebar -->
-{{!-- <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside> --}}
-<!-- /.control-sidebar -->
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-{{!-- <script src="/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables -->
-<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/dist/js/demo.js"></script> --}}
-<!-- page script -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
-    $('#theloai').change(function(){
-      window.location.href = "?category=" + $('#theloai')[0].value;
-    });
+  $('#theloai').change(function () {
+    window.location.href = "?category=" + $('#theloai')[0].value;
+  });
 </script>

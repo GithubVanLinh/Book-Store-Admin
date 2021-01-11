@@ -1,0 +1,206 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown content-wrapper">
+    <!------ Include the above in your HEAD tag ---------->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Danh sách người dùng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Danh sách người dùng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Responsive Hover Table</h3>
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right"
+                                placeholder="Search">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Phone Number</th>
+                                <th>Full Name</th>
+                                <th>Is Blocked</th>
+                                <th>option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each users.docs}}
+                            <tr>
+                                <td>{{this._id}}</td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.address}}</td>
+                                <td><span class="tag tag-success">{{this.phone_number}}</span></td>
+                                <td>{{this.full_name}}</td>
+                                <td>{{this.isBlocked}}</td>
+                                <td><button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#modal-info">
+                                        <i class="fas fa-edit"></i> 
+                                    </button>
+
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+
+                            {{#ifeq users.hasPrevPage true}}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{users.prevPage}}" tabindex="-1">Prev</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                    href="?page={{users.prevPage}}">{{users.prevPage}}</a>
+                            </li>
+                            {{/ifeq}}
+                            <li class="page-item active"><a class="page-link">{{users.page}}</a></li>
+                            {{#ifeq users.hasNextPage true}}
+                            <li class="page-item"><a class="page-link"
+                                    href="?page={{users.nextPage}}">{{users.nextPage}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{users.nextPage}}">Next</a>
+                            </li>
+                            {{/ifeq}}
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Pagination Start -->
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <div class="modal fade" id="modal-info" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-info">
+                <form id="update-form">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Info</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" disabled
+                                    placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                                <label for="full_name">Full name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" disabled
+                                    placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" disabled
+                                    placeholder="Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" disabled
+                                    placeholder="Phone Number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button id="btn-change" type="button" class="btn btn-danger btn-block"><i
+                                class="fa fa-bell"></i>block</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <script>
+        function info(isBlocked, element) {
+            if (isBlocked) {
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
+                element.innerText = "true"
+            } else {
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Block</b>");
+                element.innerText = "false"
+            }
+        }
+
+
+
+        function sync(id, element) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const user = JSON.parse(this.responseText);
+                    $("#modal-info").find('[name="email"]')[0].value = user.email || "";
+                    $("#modal-info").find('[name="full_name"]')[0].value = user.full_name || "";
+                    $("#modal-info").find('[name="address"]')[0].value = user.address || "";
+                    $("#modal-info").find('[name="phone_number"]')[0].value = user.phone_number || "";
+                    info(user.isBlocked, element);
+                }
+            };
+            xhttp.open("GET", "/api/users/" + id, true);
+            xhttp.send();
+        }
+        function changeStateBlocked(id, element) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    sync(id, element);
+                }
+            };
+            xhttp.open("POST", "/users/block", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("id=" + id);
+        }
+        $(document).ready(function () {
+
+            $('[data-toggle="modal"]').click(function () {
+                const id = $(this).parent().parent().find('td:first')[0].innerText;
+                const blockElement = $(this).parent().parent().find('td:nth-child(6)')[0];
+                sync(id);
+
+                $("#modal-info").find('#btn-change')[0].onclick = function () {
+                    changeStateBlocked(id, blockElement);
+                }
+            });
+
+
+        })
+
+    </script>
+</div>

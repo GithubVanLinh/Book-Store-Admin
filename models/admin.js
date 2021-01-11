@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const UserSchema = new Schema({
+const AdminSchema = new Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -13,10 +14,15 @@ const UserSchema = new Schema({
     full_name: String,
     address: String,
     phone_number: String,
+    salt: String,
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
     show: {
       type: Boolean,
       default: true
     }
 });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Admin", AdminSchema);
