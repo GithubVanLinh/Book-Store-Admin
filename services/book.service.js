@@ -60,7 +60,7 @@ async function validateBookInfo(bookInfo) {
   //return categoryId if valid
 
   const category = [];
-  if (typeof(bookInfo.category) === typeof([])) {
+  if (typeof (bookInfo.category) === typeof ([])) {
     const categoryArray = bookInfo.category;
 
     for (i of categoryArray) {
@@ -70,7 +70,7 @@ async function validateBookInfo(bookInfo) {
       }
       category.push(categoryId);
     }
-  }else{
+  } else {
     const categoryId = await validateCategory(bookInfo.category);
     category.push(categoryId);
   }
@@ -85,14 +85,20 @@ async function validateBookInfo(bookInfo) {
 module.exports = {
   getBookById: async (id) => {
     const _id = mongoose.Types.ObjectId(id);
-    const book = await Book.findOne({ _id: _id, show: true });
+    const book = await Book.findOne({ _id: _id, show: true })
+      .populate('author')
+      .populate('category')
+      .exec();
     return book;
   },
 
-  getAllBook: async(filter) => {
+  getAllBook: async (filter) => {
     let query;
-    if (filter.category) query = { show: true, category: filter.category };
-    else query = { show: true };
+    if (filter.category && filter.category !== "all") {
+      query = { show: true, category: filter.category };
+    } else {
+      query = { show: true };
+    }
     const options = {
       populate: [{
         path :"author",
@@ -125,7 +131,7 @@ module.exports = {
 
     const aBook = await validateBookInfo(aNewBookInfo);
     if (aBook === -1) {
-      return {err: "Validate Failed"};
+      return { err: "Validate Failed" };
     }
     console.log("book is valid");
 

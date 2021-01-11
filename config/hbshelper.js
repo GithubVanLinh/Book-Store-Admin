@@ -10,9 +10,25 @@ module.exports = function (hbs) {
     return options.inverse(this);
   });
 
-  hbs.registerHelper("ifUnd", function(a, options){
-    if(a ===undefined){
-        return options.fn(this);
+  hbs.registerHelper("ifUnd", function (a, options) {
+    if (a === undefined) {
+      return options.fn(this);
+    }
+    return options.inverse(this);
+  });
+
+  hbs.registerHelper("equal", function (a, b) {
+    return a === b;
+  });
+
+  hbs.registerHelper("showCategory", function (list) {
+    const categoryNames = list.map(category => category.name);
+    return categoryNames.join(", ");
+  });
+
+  hbs.registerHelper("ifcond", function (a, b, options) {
+    if (a === b) {
+      return options.fn(this);
     }
     return options.inverse(this);
   });
@@ -23,7 +39,8 @@ module.exports = function (hbs) {
     console.log(sa);
     console.log(sarr);
     for(i = 0; i < sarr.length; i++){
-      if(sa == sarr[i]){
+      const id = String(sarr[i]._id);
+      if(sa == id){
         return options.fn(this);
       }
     }

@@ -66,8 +66,10 @@ module.exports = {
     bookData.bookList = bookData.docs;
     bookData.category = filter.category;
 
-    bookData.categorys = await CategoryModel.getCategoryList();
+    bookData.categories = await CategoryModel.getCategoryList();
+    // res.send(bookData);
     res.render("./book/bookList", bookData);
+
   },
 
   getCreateBookForm: async (req, res, next) => {
@@ -93,7 +95,7 @@ module.exports = {
     const book = await BookModel.getBookById(bookId);
     const authors = await AuthorModel.getAllAuthor();
     const categories = await CategoryModel.getCategoryList();
-    // res.send(book.toString());
+    // res.send(book);
 
     res.render("./book/update-book", { book, authors, categories });
     // res.send(authors)
