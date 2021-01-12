@@ -126,4 +126,9 @@ module.exports = {
       const books = await BookModel.statisticsByDay(query.Date);
     }
   },
+  getTop10Book: async (req, res, next)=>{
+    const top10Book = await BookModel.getTop10Book();
+    const books = JSON.stringify(top10Book);
+    res.render('statistic_top10', {booksChartData:books, bookList: top10Book});
+  }
 };
