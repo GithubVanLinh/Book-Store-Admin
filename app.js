@@ -18,6 +18,7 @@ const categoryRoute = require('./routes/category');
 const userRoute = require('./routes/users');
 const adminRoute = require('./routes/admin');
 const apiRoute = require('./routes/api');
+const billRoute = require('./routes/bill');
 const { authLogin } = require("./middlewares/auth.mdw");
 
 var app = express();
@@ -45,6 +46,7 @@ app.use("/categories", categoryRoute);
 app.use("/books", bookRoute);
 app.use("/authors", authorRoute);
 app.use("/admin", adminRoute);
+app.use("/bills", billRoute);
 app.use("/api", apiRoute);
 
 // catch 404 and forward to error handler
