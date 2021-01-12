@@ -46,7 +46,7 @@
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Full Name</th>
-                                <th>Is Blocked</th>
+                                <th>Status</th>
                                 <th>option</th>
                             </tr>
                         </thead>
@@ -58,10 +58,10 @@
                                 <td>{{this.address}}</td>
                                 <td><span class="tag tag-success">{{this.phone_number}}</span></td>
                                 <td>{{this.full_name}}</td>
-                                <td>{{this.isBlocked}}</td>
+                                <td>{{this.status}}</td>
                                 <td><button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#modal-info">
-                                        <i class="fas fa-edit"></i> 
+                                        <i class="fas fa-edit"></i>
                                     </button>
 
                                 </td>
@@ -147,16 +147,29 @@
         <!-- /.modal-dialog -->
     </div>
     <script>
-        function info(isBlocked, element) {
-            if (isBlocked) {
-                $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
-                $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
-                element.innerText = "true"
-            } else {
-                $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
-                $("#modal-info").find('#btn-change').html("<b>Block</b>");
-                element.innerText = "false"
+        function info(status, element) {
+            //element.innerText = status;
+            console.log(status);
+            console.log(status, "Active" == status);
+            switch (true) {
+                case "Blocked" == status:
+                    $("#modal-info").find('#btn-change').show();
+                    $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+                    $("#modal-info").find('#btn-change').html("<b>Unblock</b>");
+                    break;
+                case "Active" == status:
+                    $("#modal-info").find('#btn-change').show();
+                    $("#modal-info").find('#btn-change').attr('class', "btn btn-danger btn-block");
+                    $("#modal-info").find('#btn-change').html("<b>Block</b>");
+                    break;
+                case "Pending" == status:
+                    $("#modal-info").find('#btn-change').hide();
+                    break;
+                default:
+                    console.log("wrong!");
+                    break;
             }
+
         }
 
 
@@ -170,7 +183,10 @@
                     $("#modal-info").find('[name="full_name"]')[0].value = user.full_name || "";
                     $("#modal-info").find('[name="address"]')[0].value = user.address || "";
                     $("#modal-info").find('[name="phone_number"]')[0].value = user.phone_number || "";
-                    info(user.isBlocked, element);
+                    if (element) {
+                        element.innerText = user.status;
+                    }
+                    info(user.status, element);
                 }
             };
             xhttp.open("GET", "/api/users/" + id, true);
@@ -185,22 +201,24 @@
             };
             xhttp.open("POST", "/users/block", true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("id=" + id);
+            xhttp.send(`id=${id}`);
         }
         $(document).ready(function () {
-
+            console.log("NOOOo");
             $('[data-toggle="modal"]').click(function () {
+                console.log("ok")
                 const id = $(this).parent().parent().find('td:first')[0].innerText;
                 const blockElement = $(this).parent().parent().find('td:nth-child(6)')[0];
                 sync(id);
 
                 $("#modal-info").find('#btn-change')[0].onclick = function () {
+                    console.log(blockElement)
                     changeStateBlocked(id, blockElement);
                 }
             });
 
 
-        })
+        });
 
     </script>
 </div>

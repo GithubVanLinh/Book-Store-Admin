@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
 var mongoosePaginate = require('mongoose-paginate-v2');
 
 const UserSchema = new Schema({
@@ -15,17 +14,16 @@ const UserSchema = new Schema({
     full_name: String,
     address: String,
     phone_number: String,
-    salt: String,
-    isBlocked: {
-        type: Boolean,
-        default: false
-    },
     show: {
       type: Boolean,
       default: true
+    },
+    status: {
+        type: String,
+        default: "Pending"
     }
 });
-
 UserSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("User", UserSchema);
+
