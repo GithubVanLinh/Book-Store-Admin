@@ -37,8 +37,15 @@ module.exports = {
     const id = req.body.id;
     console.log(id);
     const user = await UserModel.getUserById(id);
-    console.log(user);
-    const usr = await UserModel.updateUserById({_id: id}, {isBlocked: !user.isBlocked});
+    let newStatus;
+    if(user.status == "Active"){
+      newStatus = "Blocked";
+    } else if (user.status == "Blocked"){
+      newStatus = "Active";
+    } else {
+      return res.json({error: true});
+    }
+    const usr = await UserModel.updateUserById({_id: id}, {status: newStatus});
     res.json(usr);
   }
 };
