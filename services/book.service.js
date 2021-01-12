@@ -184,6 +184,10 @@ module.exports = {
     console.log(dateR);
 
     
+  },
+  getTop10Book: async () =>{
+    const top10Book = Book.find({show: true}).populate('author').populate('category').sort({quantity_sold: -1}).limit(10);
+    return top10Book;
   }
 
 };
