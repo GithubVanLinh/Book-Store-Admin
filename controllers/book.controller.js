@@ -7,7 +7,15 @@ const BookModel = require("../services/book.service");
 const AuthorModel = require("../services/author.service");
 const CategoryModel = require("../services/category.service");
 
-function verifyBook(bookData) {}
+function verifyBook(bookData) {
+  if (bookData.quantity < 0) {
+    return -1;
+  }
+  if (bookData.price < 0) {
+    return -2;
+  }
+  return 1;
+}
 
 module.exports = {
   createANewBook: async (req, res, next) => {
@@ -17,37 +25,40 @@ module.exports = {
     form.parse(req, function (err, fields, files) {
       //req start
       const bodyData = fields;
-      const formData = {};
-      formData.key = process.env.KEY;
-      formData.image = fs.createReadStream(files.image.path);
-      console.log(process.env.ImageServerURL);
-      request.post(
-        { url: process.env.ImageServerURL, formData: formData },
-        async function optionalCallback(err, httpResponse, body) {
-          if (err) {
-            return console.error("upload failed:", err);
+      const isVerify = verifyBook(bodyData);
+      if (isVerify == 1) {
+        const formData = {};
+        formData.key = process.env.KEY;
+        formData.image = fs.createReadStream(files.image.path);
+        console.log(process.env.ImageServerURL);
+        request.post(
+          { url: process.env.ImageServerURL, formData: formData },
+          async function optionalCallback(err, httpResponse, body) {
+            if (err) {
+              return console.error("upload failed:", err);
+            }
+            resp = JSON.parse(body);
+            console.log("Upload successful!  Server responded with:", resp);
+
+            const urlImage = resp.data.url;
+            console.log(urlImage);
+            bodyData.image = urlImage;
+
+            console.log(bodyData);
+
+            const datares = await BookModel.createANewBook(bodyData);
+
+            if (datares.err) {
+              res.json(datares.err);
+            }
+            res.redirect('/books');
           }
-          resp = JSON.parse(body);
-          console.log("Upload successful!  Server responded with:", resp);
+        );
+      } else {
+        req.flash(err, "value < 0");
+        res.redirect("/books/add");
+      }
 
-          const urlImage = resp.data.url;
-          console.log(urlImage);
-          bodyData.image = urlImage;
-
-          console.log(bodyData);
-
-          const isVerify = verifyBook(bodyData);
-          let datares;
-          
-          if (isVerify)
-            datares = await BookModel.createANewBook(bodyData);
-          else res.redirect("/books");
-          if (datares.err) {
-            res.json(datares.err);
-          }
-          res.json(datares);
-        }
-      );
       //end req
     });
   },
@@ -69,7 +80,6 @@ module.exports = {
     bookData.categories = await CategoryModel.getCategoryList();
     // res.send(bookData);
     res.render("./book/bookList", bookData);
-
   },
 
   getCreateBookForm: async (req, res, next) => {

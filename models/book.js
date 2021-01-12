@@ -8,7 +8,7 @@ var mongoosePaginate = require('mongoose-paginate-v2');
 const BookSchema = new Schema({
   id: {
     type: String,
-    required: true
+    required: false
   },
   name:  {
     type: String,

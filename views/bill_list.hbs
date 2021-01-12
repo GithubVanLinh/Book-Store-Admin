@@ -1,0 +1,244 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Danh sách đơn hàng</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover w.auto">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Người đặt</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Trạng thái</th>
+                                        <th>options</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {{#each bills}}
+                                    <tr>
+                                        <td>{{this._id}}</td>
+                                        <td>{{this.userId.email}}</td>
+                                        <td>{{this.booking_date_vn}}</td>
+                                        <td>{{this.status}}</td>
+                                        <td style="text-align: center;">
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal-info">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <!-- Pagination Start -->
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+
+
+                                        {{#ifeq hasPrevPage true}}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link"
+                                                href="?page={{prevPage}}">{{prevPage}}</a>
+                                        </li>
+                                        {{/ifeq}}
+                                        <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                                        {{#ifeq hasNextPage true}}
+                                        <li class="page-item"><a class="page-link"
+                                                href="?page={{nextPage}}">{{nextPage}}</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{nextPage}}">Next</a>
+                                        </li>
+                                        {{/ifeq}}
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- Pagination Start -->
+                            <div class="modal fade" id="modal-info" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content bg-info">
+                                        <form id="update-form">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Info</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="card-body">
+
+                                                    <div class="form-group">
+                                                        <label for="full_name">Tên</label>
+                                                        <input type="text" class="form-control" id="full_name"
+                                                            name="full_name" placeholder="Nhập tên" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="delivery_address">Địa chỉ</label>
+                                                        <input type="text" class="form-control" id="delivery_address"
+                                                            name="delivery_address" placeholder="Địa chỉ" disabled>
+                                                        <div class="form-group">
+                                                            <label for="booking_date">Ngày đặt</label>
+                                                            <input type="text" class="form-control" id="booking_date"
+                                                                name="booking_date" placeholder="Ngày đặt" disabled>
+                                                            <div class="form-group">
+                                                                <label for="books">Danh sách hàng</label>
+                                                                <div id="books"></div>
+
+                                                                <div class="form-group">
+                                                                    <label for="total_price">Tổng tiền</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="total_price" name="total_price"
+                                                                        placeholder="Tổng tiền" disabled>
+                                                                    <div class="form-group">
+                                                                        <label for="status">Trạng thái giao hàng</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="status" name="status"
+                                                                            placeholder="Trạng thái giao hàng" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button id="btn-change" type="button"
+                                                                        class="btn btn-primary btn-block">Done</button>
+                                                                </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+</div>
+<!-- /.content-wrapper -->
+<!-- page script -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
+<script>
+
+    function stringToDateStringFormat(strDate) {
+        const date = new Date(strDate);
+        return date.getDate() + "/" + date.getMonth() + 1 + "/" + date.getFullYear();
+    }
+
+    function info(status) {
+        //element.innerText = status;
+        console.log(status);
+        console.log(status, "Active" == status);
+        switch (true) {
+            case "Pending" == status:
+                $("#modal-info").find('#btn-change').show();
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Done</b>");
+                break;
+            default:
+                $("#modal-info").find('#btn-change').hide();
+                break;
+        }
+
+    }
+
+
+
+    function sync(id, statusE) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                const bill = JSON.parse(this.responseText);
+                if (bill.userId)
+                    $("#modal-info").find('[name="full_name"]')[0].value = bill.userId.full_name || "";
+                else
+                    $("#modal-info").find('[name="full_name"]')[0].value = "";
+                $("#modal-info").find('[name="delivery_address"]')[0].value = bill.delivery_address || "";
+                $("#modal-info").find('[name="booking_date"]')[0].value = stringToDateStringFormat(bill.booking_date) || "";
+                $("#modal-info").find('[name="total_price"]')[0].value = bill.total_price || "";
+                $("#modal-info").find('[name="status"]')[0].value = bill.status || "";
+                info(bill.status);
+                $("#modal-info").find('#books').html('');
+                for (book of bill.books) {
+                    console.log(book);
+                    if(book.bookId)
+                        $("#modal-info").find('#books').append(`<div>Tên sách: ${book.bookId.name}</div> <div>Số lượng: ${book.amount}</div>`)
+                }
+
+
+                if (statusE) {
+                    statusE.innerText = bill.status;
+                }
+            }
+        };
+
+        xhttp.open("GET", "/api/bills/" + id, true);
+        xhttp.send();
+    }
+    function update(id, statusE) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("update success");
+                sync(id, statusE);
+            }
+        };
+
+        xhttp.open("PUT", "/api/bills", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`id=${id}`);
+    }
+    $(document).ready(function () {
+
+        $('[data-toggle="modal"]').click(function () {
+            const id = $(this).parent().parent().find('td:first')[0].innerText;
+            const statusElement = $(this).parent().parent().find('td:nth-child(3)')[0];
+            sync(id);
+
+            $("#modal-info").find('#btn-change')[0].onclick = function () {
+                if (confirm("Bạn có chắc muốn hoàn thành đơn hàng này?"))
+                    update(id, statusElement);
+            }
+        });
+
+
+    })
+
+</script>

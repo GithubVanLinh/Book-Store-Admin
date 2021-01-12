@@ -3,30 +3,38 @@ const Book = require("./book");
 const User = require("./user");
 const { Schema } = mongoose;
 
+const paginate = require("mongoose-paginate-v2");
+
 const BillSchema = new Schema({
-  id: String,
-  book: {
+  userId: {
     type: mongoose.Types.ObjectId,
-    ref: Book
+    ref: User,
   },
-  amount: Number,
-  total_price: Number,
-  status: Number,
+  books: [
+    {
+      bookId: {
+        type: mongoose.Types.ObjectId,
+        ref: Book,
+      },
+      count: Number,
+    },
+  ],
+  delivery_address: String,
   booking_date: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   update_date: Date,
-  user: {
-    type: mongoose.Types.ObjectId,
-    ref: User
+  total_price: Number,
+  status: {
+    type: String,
+    default: "Pending",
   },
   show: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
-//status 1: Dang giao
-//status 2: Da giao
-//status 0: Da huy
+
+BillSchema.plugin(paginate);
 module.exports = mongoose.model("Bill", BillSchema);

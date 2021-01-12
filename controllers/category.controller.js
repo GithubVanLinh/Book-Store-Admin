@@ -23,7 +23,7 @@ module.exports = {
     res.json({updated: true});
   },
   getAllCategory: async (req, res, next) => {
-      const page = req.query.page || 1;
+    const page = req.query.page || 1;
 
     const categoryList = await Category.getCategoriesPaginate(page);
     categoryList.categoryList = categoryList.docs;
