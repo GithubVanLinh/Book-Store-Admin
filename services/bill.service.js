@@ -87,4 +87,8 @@ module.exports = {
     }
     
   },
+  getCountBillPending: async ()=>{
+    const count = await Bill.find({show: true, status: "Pending"}).count();
+    return count;
+  }
 };
