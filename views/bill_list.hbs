@@ -32,8 +32,9 @@
                                         <th>ID</th>
                                         <th>Người đặt</th>
                                         <th>Ngày đặt</th>
+                                        <th>Tổng tiền</th>
                                         <th>Trạng thái</th>
-                                        <th>options</th>
+                                        <th>Tùy chọn</th>
                                     </tr>
                                 </thead>
 
@@ -43,6 +44,7 @@
                                         <td>{{this._id}}</td>
                                         <td>{{this.userId.email}}</td>
                                         <td>{{this.booking_date_vn}}</td>
+                                        <td>{{this.total_price}}</td>
                                         <td>{{this.status}}</td>
                                         <td style="text-align: center;">
                                             <button type="button" class="btn btn-info" data-toggle="modal"
@@ -62,7 +64,7 @@
 
                                         {{#ifeq hasPrevPage true}}
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                                            <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Trước</a>
                                         </li>
                                         <li class="page-item"><a class="page-link"
                                                 href="?page={{prevPage}}">{{prevPage}}</a>
@@ -74,7 +76,7 @@
                                                 href="?page={{nextPage}}">{{nextPage}}</a>
                                         </li>
                                         <li class="page-item">
-                                            <a class="page-link" href="?page={{nextPage}}">Next</a>
+                                            <a class="page-link" href="?page={{nextPage}}">Sau</a>
                                         </li>
                                         {{/ifeq}}
                                     </ul>
@@ -126,7 +128,7 @@
                                                                 </div>
                                                                 <div class="modal-footer justify-content-between">
                                                                     <button id="btn-change" type="button"
-                                                                        class="btn btn-primary btn-block">Done</button>
+                                                                        class="btn btn-primary btn-block">Hoàn thành</button>
                                                                 </div>
                                         </form>
                                     </div>
@@ -229,7 +231,7 @@
 
         $('[data-toggle="modal"]').click(function () {
             const id = $(this).parent().parent().find('td:first')[0].innerText;
-            const statusElement = $(this).parent().parent().find('td:nth-child(3)')[0];
+            const statusElement = $(this).parent().parent().find('td:nth-child(5)')[0];
             sync(id);
 
             $("#modal-info").find('#btn-change')[0].onclick = function () {

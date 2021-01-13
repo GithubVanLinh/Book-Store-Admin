@@ -7,7 +7,7 @@ module.exports = {
     const options = {
       page: page,
       limit: LIMIT,
-      sort: { update_date: -1 },
+      sort: { booking_date: -1 },
       populate: {
         path: "userId",
         select: "email",
@@ -41,6 +41,50 @@ module.exports = {
   },
   updateBillStatusById:async (id, status)=>{
     
-    return await Bill.findOneAndUpdate({_id: id}, {status: status});
-  }
+    return await Bill.findOneAndUpdate({_id: id}, {status: status, update_date: Date.now()});
+  },
+  getBillsByTwoDate: async (startDate, endDate, page)=>{
+    console.log(startDate, endDate);
+    var start = new Date(startDate);
+    start.setHours(0, 0, 0);
+    var end = new Date(endDate);
+    end.setHours(23, 59, 59);
+    if(page){
+      const options = {
+        page: page,
+        limit: LIMIT,
+        sort: { total_price: -1 },
+        populate: {
+          path: "userId",
+          select: "email",
+        },
+      };
+  
+      let bills;
+      await Bill.paginate({
+        status: "Done",
+        update_date: {$gte: start, $lte: end },
+        show: true
+      }, options).then(function(result){
+        bills = result;
+      });
+      
+      return bills;
+    }else{
+      const bills =await Bill.find({
+        status: "Done",
+        update_date: {$gte: start, $lte: end },
+        show: true
+      })
+      .populate({
+        path: "books",
+        populate: {
+            path: "bookId",
+            select: ["name", "price"]
+        }
+      });
+      return bills;
+    }
+    
+  },
 };

@@ -6,4 +6,5 @@ const BillController = require('../controllers/bill.controller');
 
 router.get('/',authLogin,  BillController.getAllBill);
 
+
 module.exports = router;
