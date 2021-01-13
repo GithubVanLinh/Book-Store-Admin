@@ -26,14 +26,14 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{countPendingBill}}</h3>
 
-              <p>Đơn hàng mới</p>
+              <p>Đơn hàng chưa giao</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/bills" class="small-box-footer">Chi tiết<i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -43,12 +43,12 @@
             <div class="inner">
               <h3>{{countUser}}</h3>
 
-              <p>Tổng người dùng</p>
+              <p>Người dùng</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="/users" class="small-box-footer">Thêm thông tin <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/users" class="small-box-footer">Chi tiết<i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -58,7 +58,35 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
-
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Tổng doanh thu tháng {{month}}: {{total}}VND</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart">
+                <div class="chartjs-size-monitor">
+                  <div class="chartjs-size-monitor-expand">
+                    <div class=""></div>
+                  </div>
+                  <div class="chartjs-size-monitor-shrink">
+                    <div class=""></div>
+                  </div>
+                </div>
+                <canvas id="barChart"
+                  style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 684px;"
+                  width="1368" height="500" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
@@ -72,4 +100,45 @@
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+  <script>
+    $(document).ready(function () {
+
+      const strbooks = `{{barChartData}}`;
+      const books = JSON.parse(strbooks.replace(/&quot;/g, '"'));
+      console.log(books);
+      const dataset = [];
+      for (book of books) {
+        const databook = {};
+        databook.label = book.name;
+        databook.data = [book.price];
+        databook.backgroundColor = `rgba(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, 1)`
+        dataset.push(databook);
+      }
+      console.log(dataset);
+
+      var barChartCanvas = $('#barChart').get(0).getContext('2d')
+      const barChartData = {};
+      barChartData.datasets = dataset;
+      barChartData.labels = ['Doanh thu tháng'];
+
+      var barChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        datasetFill: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+
+      var barChart = new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
+      })
+    });
+  </script>
 </div>
