@@ -3,22 +3,22 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
 
-    <form class="form-inline ml-3" action="/book/search" method="GET">
+    {{!-- <form class="form-inline ml-3" action="/book/search" method="GET">
       <div class="input-group input-group-sm">
-        <input value="{{keyword}}" name="keyword" class="form-control " type="search"
-          placeholder="Search" aria-label="Search">
+        <input value="{{keyword}}" name="keyword" class="form-control " type="search" placeholder="Search"
+          aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
-    </form>
+    </form> --}}
 
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Books</h1>
+          <h1>Sách</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -37,18 +37,26 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <select name="The loai" id="theloai">
-                {{#each categories}}
-                {{#ifeq _id ../category}}
-                <option selected value="{{_id}}">{{name}}</option>
-                {{else}}
-                <option value="{{_id}}">{{name}}</option>
-                {{/ifeq}}
-                {{/each}}
-              </select>
-              <a class=".card-link" href="/books/add" style="float: right;">
-                <button class="btn" style="background-color: #2980b9;color: white;">Add book</button>
-              </a>
+              <div class="row">
+
+                <div class="col-9">
+                  <select name="The loai" id="theloai" class="custom-select rounded-0">
+                    {{#each categories}}
+                    {{#ifeq _id ../category}}
+                    <option selected value="{{_id}}">{{name}}</option>
+                    {{else}}
+                    <option value="{{_id}}">{{name}}</option>
+                    {{/ifeq}}
+                    {{/each}}
+                  </select>
+                </div>
+                <div class="col-3">
+                  <a class=".card-link" href="/books/add" style="float: right;">
+                    <button class="btn" style="background-color: #2980b9;color: white;">Thêm sách</button>
+                  </a>
+                </div>
+              </div>
+
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -57,15 +65,15 @@
                   aria-describedby="example2_info" style="width: 100%;">
                   <thead class="thead-dark">
                     <tr role="row">
-                      <th>Name</th>
-                      <th>Quantity</th>
-                      <th>Quantity Of Sale</th>
-                      <th>Price</th>
-                      <th>Category</th>
-                      <th>Author</th>
-                      <th>Image</th>
-                      <th>Date</th>
-                      <th>Option</th>
+                      <th>Tên</th>
+                      <th>Số lượng</th>
+                      <th>Số lượng đã bán</th>
+                      <th>Giá</th>
+                      <th>Danh mục</th>
+                      <th>Tác giả</th>
+                      <th>Ảnh</th>
+                      <th>Ngày đăng</th>
+                      <th>Tùy chọn</th>
                     </tr>
                   </thead>
 
@@ -103,7 +111,7 @@
 
                       {{#ifeq hasPrevPage true}}
                       <li class="page-item">
-                        <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Prev</a>
+                        <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Trước</a>
                       </li>
                       <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
                       </li>
@@ -113,13 +121,13 @@
                       <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="?page={{nextPage}}">Next</a>
+                        <a class="page-link" href="?page={{nextPage}}">Sau</a>
                       </li>
                       {{/ifeq}}
                       {{else}}
                       {{#ifeq hasPrevPage true}}
                       <li class="page-item">
-                        <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Prev</a>
+                        <a class="page-link" href="?page={{prevPage}}&category={{category}}" tabindex="-1">Trước</a>
                       </li>
                       <li class="page-item"><a class="page-link"
                           href="?page={{prevPage}}&category={{category}}">{{prevPage}}</a>
@@ -131,7 +139,7 @@
                           href="?page={{nextPage}}&category={{category}}">{{nextPage}}</a>
                       </li>
                       <li class="page-item">
-                        <a class="page-link" href="?page={{nextPage}}&category={{category}}">Next</a>
+                        <a class="page-link" href="?page={{nextPage}}&category={{category}}">Sau</a>
                       </li>
                       {{/ifeq}}
                       {{/ifUnd}}

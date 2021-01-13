@@ -1,0 +1,85 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="wrapper fadeInDown content-wrapper">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+
+                Thống kê doanh số
+            </h3>
+        </div>
+        <div class="card-body">
+            <h4>Thống kê</h4>
+            <div class="row">
+                <div class="col-5 col-sm-3">
+                    <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active" id="vert-tabs-home-tab" data-toggle="pill" href="#vert-tabs-home"
+                            role="tab" aria-controls="vert-tabs-home" aria-selected="true">Theo ngày</a>
+                        <a class="nav-link" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile"
+                            role="tab" aria-controls="vert-tabs-profile" aria-selected="false">Theo tháng</a>
+                        <a class="nav-link" id="vert-tabs-messages-tab" data-toggle="pill" href="#vert-tabs-messages"
+                            role="tab" aria-controls="vert-tabs-messages" aria-selected="false">Theo năm</a>
+                        <a class="nav-link" id="vert-tabs-settings-tab" data-toggle="pill" href="#vert-tabs-settings"
+                            role="tab" aria-controls="vert-tabs-settings" aria-selected="false">Theo quý</a>
+                    </div>
+                </div>
+                <div class="col-7 col-sm-9">
+                    <div class="tab-content" id="vert-tabs-tabContent">
+                        <div class="tab-pane text-left fade active show" id="vert-tabs-home" role="tabpanel"
+                            aria-labelledby="vert-tabs-home-tab">
+                            <form action="/statistics/revenue" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input type="date" class="form-control" name="day">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Thống kê</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="vert-tabs-profile" role="tabpanel"
+                            aria-labelledby="vert-tabs-profile-tab">
+                            <form action="/statistics/revenue" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input type="month" class="form-control" name="month">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Thống kê</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="vert-tabs-messages" role="tabpanel"
+                            aria-labelledby="vert-tabs-messages-tab">
+                            <form action="/statistics/revenue" method="get">
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" name="year" min="2000" max="2050">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Thống kê</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="vert-tabs-settings" role="tabpanel"
+                            aria-labelledby="vert-tabs-settings-tab">
+                            <form action="/statistics/revenue" method="get">
+                                <select name="quarter" id="" class="custom-select rounded-0">
+                                    <option value="1">Quý 1</option>
+                                    <option value="2">Quý 2</option>
+                                    <option value="3">Quý 3</option>
+                                    <option value="4">Quý 4</option>
+                                </select>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" name="year" min="2000" max="2050">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-info btn-flat">Thống kê</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+    </div>
+</div>

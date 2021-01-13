@@ -16,7 +16,7 @@ const BillSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: Book,
       },
-      count: Number,
+      amount: Number,
     },
   ],
   delivery_address: String,

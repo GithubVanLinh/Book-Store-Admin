@@ -1,0 +1,277 @@
+<!-- Include the above in your HEAD tag -->
+
+<div class="wrapper fadeInDown content-wrapper">
+    <div class="col">
+        <div class="card card-success">
+            <div class="card-header">
+                <h3 class="card-title">Tổng doanh thu: {{total}}VND</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                        </div>
+                    </div>
+                    <canvas id="barChart"
+                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 684px;"
+                        width="1368" height="500" class="chartjs-render-monitor"></canvas>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover w.auto">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Người đặt</th>
+                        <th>Ngày đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each bills}}
+                    <tr>
+                        <td>{{this._id}}</td>
+                        <td>{{this.userId.email}}</td>
+                        <td>{{this.booking_date_vn}}</td>
+                        <td>{{this.total_price}}</td>
+                        <td>{{this.status}}</td>
+                        <td style="text-align: center;">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <!-- Pagination Start -->
+            <div class="col-md-12">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+
+
+                        {{#ifeq hasPrevPage true}}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{prevPage}}" tabindex="-1">Trước</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="?page={{prevPage}}">{{prevPage}}</a>
+                        </li>
+                        {{/ifeq}}
+                        <li class="page-item active"><a class="page-link">{{page}}</a></li>
+                        {{#ifeq hasNextPage true}}
+                        <li class="page-item"><a class="page-link" href="?page={{nextPage}}">{{nextPage}}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{nextPage}}">Sau</a>
+                        </li>
+                        {{/ifeq}}
+                    </ul>
+                </nav>
+            </div>
+            <!-- Pagination Start -->
+            <div class="modal fade" id="modal-info" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-info">
+                        <form id="update-form">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Info</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <label for="full_name">Tên</label>
+                                        <input type="text" class="form-control" id="full_name" name="full_name"
+                                            placeholder="Nhập tên" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="delivery_address">Địa chỉ</label>
+                                        <input type="text" class="form-control" id="delivery_address"
+                                            name="delivery_address" placeholder="Địa chỉ" disabled>
+                                        <div class="form-group">
+                                            <label for="booking_date">Ngày đặt</label>
+                                            <input type="text" class="form-control" id="booking_date"
+                                                name="booking_date" placeholder="Ngày đặt" disabled>
+                                            <div class="form-group">
+                                                <label for="books">Danh sách hàng</label>
+                                                <div id="books"></div>
+
+                                                <div class="form-group">
+                                                    <label for="total_price">Tổng tiền</label>
+                                                    <input type="text" class="form-control" id="total_price"
+                                                        name="total_price" placeholder="Tổng tiền" disabled>
+                                                    <div class="form-group">
+                                                        <label for="status">Trạng thái giao hàng</label>
+                                                        <input type="text" class="form-control" id="status"
+                                                            name="status" placeholder="Trạng thái giao hàng" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button id="btn-change" type="button"
+                                                        class="btn btn-primary btn-block">Hoàn Thành</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/plugins/chart.js/Chart.min.js"></script>
+
+<script>
+
+    function stringToDateStringFormat(strDate) {
+        const date = new Date(strDate);
+        return date.getDate() + "/" + date.getMonth() + 1 + "/" + date.getFullYear();
+    }
+
+    function info(status) {
+        //element.innerText = status;
+        console.log(status);
+        console.log(status, "Active" == status);
+        switch (true) {
+            case "Pending" == status:
+                $("#modal-info").find('#btn-change').show();
+                $("#modal-info").find('#btn-change').attr('class', "btn btn-primary btn-block");
+                $("#modal-info").find('#btn-change').html("<b>Done</b>");
+                break;
+            default:
+                $("#modal-info").find('#btn-change').hide();
+                break;
+        }
+
+    }
+
+
+
+    function sync(id, statusE) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText)
+                const bill = JSON.parse(this.responseText);
+                if (bill.userId)
+                    $("#modal-info").find('[name="full_name"]')[0].value = bill.userId.full_name || "";
+                else
+                    $("#modal-info").find('[name="full_name"]')[0].value = "";
+                $("#modal-info").find('[name="delivery_address"]')[0].value = bill.delivery_address || "";
+                $("#modal-info").find('[name="booking_date"]')[0].value = stringToDateStringFormat(bill.booking_date) || "";
+                $("#modal-info").find('[name="total_price"]')[0].value = bill.total_price || "";
+                $("#modal-info").find('[name="status"]')[0].value = bill.status || "";
+                info(bill.status);
+                $("#modal-info").find('#books').html('');
+                for (book of bill.books) {
+                    console.log(book);
+                    if (book.bookId)
+                        $("#modal-info").find('#books').append(`<div>Tên sách: ${book.bookId.name}</div> <div>Số lượng: ${book.amount}</div>`)
+                }
+
+
+                if (statusE) {
+                    statusE.innerText = bill.status;
+                }
+            }
+        };
+
+        xhttp.open("GET", "/api/bills/" + id, true);
+        xhttp.send();
+    }
+    function update(id, statusE) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                alert("update success");
+                sync(id, statusE);
+            }
+        };
+
+        xhttp.open("PUT", "/api/bills", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(`id=${id}`);
+    }
+
+
+    $(document).ready(function () {
+
+
+        $('[data-toggle="modal"]').click(function () {
+            const id = $(this).parent().parent().find('td:first')[0].innerText;
+            const statusElement = $(this).parent().parent().find('td:nth-child(3)')[0];
+            sync(id);
+
+            $("#modal-info").find('#btn-change')[0].onclick = function () {
+                if (confirm("Bạn có chắc muốn hoàn thành đơn hàng này?"))
+                    update(id, statusElement);
+            }
+        });
+
+
+        const strbooks = `{{chartData}}`;
+        const books = JSON.parse(strbooks.replace(/&quot;/g, '"'));
+        console.log(books);
+        const dataset = [];
+        for (book of books) {
+            const databook = {};
+            databook.label = book.name;
+            databook.data = [book.price];
+            databook.backgroundColor = `rgba(${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, ${Math.round(Math.random() * 255)}, 1)`
+            dataset.push(databook);
+        }
+        console.log(dataset);
+
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        const barChartData = {};
+        barChartData.datasets = dataset;
+        barChartData.labels = ['Top 10'];
+
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+        var barChart = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
+    });
+
+
+</script>

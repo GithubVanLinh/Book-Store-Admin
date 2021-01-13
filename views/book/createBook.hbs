@@ -22,7 +22,7 @@
             <form id="fm-create-book" action="/books/add" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="form-group col-md-8">
-                        <label for="name">Name:</label>
+                        <label for="name">Tên:</label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="form-group col-md-4" hidden>
@@ -33,7 +33,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <div class="form-group">
-                            <label for="author">Author:</label>
+                            <label for="author">Tác giả:</label>
                             <select class="form-control" name="author" id="author" required>
                                 <option value="" disabled selected>Choose author</option>
                                 {{#each authors}}
@@ -46,7 +46,7 @@
                         {{!-- <label for="category">Category:</label>
                         <input type="text" class="form-control" id="category" name="category"> --}}
                         <div class="form-group">
-                            <label for="category">Category:</label>
+                            <label for="category">Danh mục:</label>
                             <select class="form-control" name="category" id="category" multiple>
                                 {{#each categories}}
                                 <option value="{{this._id}}">{{this.name}}</option>
@@ -57,12 +57,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="quantity">Quantity:</label>
+                        <label for="quantity">Số lượng:</label>
                         <label id="quantity-message"></label>
                         <input type="number" class="form-control" id="quantity" name="quantity" required>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="price">Price:</label>
+                        <label for="price">Giá:</label>
                         <label id="price-message"></label>
                         <input type="number" class="form-control" id="price" name="price" required>
                     </div>
@@ -72,14 +72,14 @@
                     <input type="url" class="form-control" id="image" name="image">
                 </div> --}}
                 <div class="form-group">
-                    <label for="image">Image url:</label>
+                    <label for="image">Ảnh:</label>
                     <input type="file" class="form-control" id="image" name="image" required>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Mô tả</label>
                     <input type="text" class="form-control" id="description" name="description"></input>
                 </div>
-                <button type="submit" class="btn btn-primary">Add to Database</button></a>
+                <button type="submit" class="btn btn-primary">Thêm</button></a>
 
             </form>
         </div>
