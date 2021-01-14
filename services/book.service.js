@@ -107,6 +107,7 @@ module.exports = {
         path :"category",
         match: {show: true}
       }],
+      sort: {date: -1},
       page: filter.page,
       limit: LIMIT,
     };
@@ -145,10 +146,10 @@ module.exports = {
   updateABook: async (bookInfo) => {
     try {
       //check book exists
-      const isBookExists = await CheckBookExists(bookInfo.id);
-      if (!isBookExists) {
-        return -1;
-      }
+      // const isBookExists = await CheckBookExists(bookInfo.id);
+      // if (!isBookExists) {
+      //   return -1;
+      // }
       const aBook = await validateBookInfo(bookInfo);
       if (aBook === -1) {
         return -1;
