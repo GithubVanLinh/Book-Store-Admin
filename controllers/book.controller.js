@@ -96,7 +96,7 @@ module.exports = {
     if (newBookRes == -1) {
       res.send("update Failed");
     }
-    res.render("/books");
+    res.redirect("/books");
     // res.send(req.body);
   },
 
@@ -112,11 +112,11 @@ module.exports = {
   },
 
   deleteABook: async (req, res, next) => {
-    const _id = req.body._id;
+    const _id = req.params.id;
 
     //id mean real id (_id)
     const status = await BookModel.deleteABook(_id);
-    res.send("OK");
+    res.redirect("/books");
   },
   statisticsByDay: async (req, res, next) => {
     const query = req.query;

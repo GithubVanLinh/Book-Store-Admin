@@ -15,7 +15,7 @@ router.post('/add',authLogin, BookController.createANewBook);
 router.get('/add',authLogin, BookController.getCreateBookForm);
 router.get('/update',authLogin, BookController.getUpdateForm);
 router.post('/update',authLogin, BookController.updateANewBook);
-router.post('/delete',authLogin, BookController.deleteABook);
+router.get('/delete/:id',authLogin, BookController.deleteABook);
 
 
 module.exports = router;
