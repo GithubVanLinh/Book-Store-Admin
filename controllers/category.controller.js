@@ -5,10 +5,10 @@ module.exports = {
     const category = req.body;
     console.log("category", category);
     const categoryRes = await Category.addNewCategory(category);
-    res.redirect("/category");
+    res.redirect("/categories");
   },
   getAddCategoryForm: async (req, res, next) => {
-    res.render("./category/addCategory");
+    res.render("category/addCategory");
   },
   updateCategoryById: async (req, res, next) => {
     console.log("update");
@@ -29,7 +29,7 @@ module.exports = {
     categoryList.categoryList = categoryList.docs;
     delete categoryList.docs;
     console.log(categoryList);
-    res.render("./category/categorylist", categoryList );
+    res.render("category/categorylist", categoryList );
     // res.send(categoryList);
   },
   getCategoryJSON: async (req, res, next)=>{

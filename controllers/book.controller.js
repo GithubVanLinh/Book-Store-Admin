@@ -96,7 +96,7 @@ module.exports = {
     if (newBookRes == -1) {
       res.send("update Failed");
     }
-    res.send(newBookRes);
+    res.render("/books");
     // res.send(req.body);
   },
 

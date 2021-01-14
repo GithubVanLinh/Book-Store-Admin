@@ -124,10 +124,10 @@ module.exports = {
     console.log("Book info", aNewBookInfo);
 
     //check book exists
-    const isBookExists = await CheckBookExists(aNewBookInfo.id);
-    if (isBookExists) {
-      return -1;
-    }
+    //const isBookExists = await CheckBookExists(aNewBookInfo.id);
+    // if (isBookExists) {
+    //   return -1;
+    // }
 
     const aBook = await validateBookInfo(aNewBookInfo);
     if (aBook === -1) {

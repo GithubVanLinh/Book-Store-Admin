@@ -9,15 +9,15 @@ module.exports = {
     },
     getAllAuthor: async (req, res, next) => {
         const authorList = await Author.getAllAuthor();
-        res.render("./author/author-list", { authorList });
+        res.render("author/author-list", { authorList });
     },
     renderCreateAuthorForm: async (req, res, next) => {
-        res.render('./author/create-author');
+        res.render('author/create-author');
     },
     postNewAuthor: async (req, res, next) => {
         const newAuthor = req.body;
         // res.send(newAuthor);
         await Author.addNewAuthor(newAuthor);
-        res.redirect("/author");
+        res.redirect("/authors");
     }
 }
