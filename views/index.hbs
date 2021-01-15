@@ -101,11 +101,46 @@
   </section>
   <!-- /.content -->
   <script>
+    function sortBook(books) {
+      const length = books.length;
+      console.log(length);
+      for (i = 0; i < length-1; i++) {
+        for (j = 0; j < length; j++) {
+          if (books[i].price > books[j].price) {
+            console.log(books[i].price);
+            temp = books[i];
+            books[i]= books[j];
+            books[j] = temp;
+          }
+        }
+
+      }
+    }
+    function cutBooks(books) {
+      sortBook(books);
+      console.log("sorted", books);
+      var differ = 0;
+      for (i = 5; i < books.length; i++) {
+        differ += books[i].price;
+      }
+
+      newBooks = [];
+      for (i = 0; i < 5; i++) {
+        newBooks[i] = books[i];
+      }
+      newBooks.push({ price: differ, name: "Khác" });
+      return newBooks;
+    }
     $(document).ready(function () {
 
       const strbooks = `{{barChartData}}`;
-      const books = JSON.parse(strbooks.replace(/&quot;/g, '"'));
+      const booksData = JSON.parse(strbooks.replace(/&quot;/g, '"'));
+      console.log(booksData);
+
+      const books = cutBooks(booksData);
       console.log(books);
+
+
       const dataset = [];
       for (book of books) {
         const databook = {};
